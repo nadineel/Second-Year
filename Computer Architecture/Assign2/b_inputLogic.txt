@@ -1,0 +1,93 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 09.11.2020 11:50:25
+-- Design Name: 
+-- Module Name: B_inputLogic - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity B_inputLogic is
+  Port ( B : in  STD_LOGIC_VECTOR (31 downto 0);
+         s0 : in  STD_LOGIC;
+         s1 : in  STD_LOGIC;
+         Y : out  STD_LOGIC_VECTOR (31 downto 0)
+        );
+end B_inputLogic;
+
+architecture Behavioral of B_inputLogic is
+
+
+--component 2-1 mux                             
+   COMPONENT mux2_1                             
+   PORT( s : in  STD_LOGIC;                      
+       in0 : in  STD_LOGIC; 
+       in1 : in  STD_LOGIC; 
+       z : out  STD_LOGIC); 
+   END COMPONENT;                                
+
+begin
+	mux0: mux2_1 port map(in0 => s1,in1 => s0,S => B(0),Z => Y(0));
+	mux1: mux2_1 port map(in0 => s1,in1 => s0,S => B(1),Z => Y(1));
+	mux2: mux2_1 port map(in0 => s1,in1 => s0,S => B(2),Z => Y(2));
+	mux3: mux2_1 port map(in0 => s1,in1 => s0,S => B(3),Z => Y(3));
+	mux4: mux2_1 port map(in0 => s1,in1 => s0,S => B(4),Z => Y(4));
+	mux5: mux2_1 port map(in0 => s1,in1 => s0,S => B(5),Z => Y(5));
+	mux6: mux2_1 port map(in0 => s1,in1 => s0,S => B(6),Z => Y(6));
+	mux7: mux2_1 port map(in0 => s1,in1 => s0,S => B(7),Z => Y(7));
+	mux8: mux2_1 port map(in0 => s1,in1 => s0,S => B(8),Z => Y(8));
+	mux9: mux2_1 port map(in0 => s1,in1 => s0,S => B(9),Z => Y(9));
+	mux10: mux2_1 port map(in0 => s1,in1 => s0,S => B(10),Z => Y(10));
+	mux11: mux2_1 port map(in0 => s1,in1 => s0,S => B(11),Z => Y(11));
+	mux12: mux2_1 port map(in0 => s1,in1 => s0,S => B(12),Z => Y(12));
+	mux13: mux2_1 port map(in0 => s1,in1 => s0,S => B(13),Z => Y(13));
+	mux14: mux2_1 port map(in0 => s1,in1 => s0,S => B(14),Z => Y(14));
+	mux15: mux2_1 port map(in0 => s1,in1 => s0,S => B(15),Z => Y(15));
+	
+	mux16: mux2_1 port map(in0 => s1,in1 => s0,S => B(16),Z => Y(16));
+	mux17: mux2_1 port map(in0 => s1,in1 => s0,S => B(17),Z => Y(17));
+	mux18: mux2_1 port map(in0 => s1,in1 => s0,S => B(18),Z => Y(18));
+	mux19: mux2_1 port map(in0 => s1,in1 => s0,S => B(19),Z => Y(19));
+	
+	mux20: mux2_1 port map(in0 => s1,in1 => s0,S => B(20),Z => Y(20));
+	mux21: mux2_1 port map(in0 => s1,in1 => s0,S => B(21),Z => Y(21));
+	mux22: mux2_1 port map(in0 => s1,in1 => s0,S => B(22),Z => Y(22));
+	mux23: mux2_1 port map(in0 => s1,in1 => s0,S => B(23),Z => Y(23));
+	mux24: mux2_1 port map(in0 => s1,in1 => s0,S => B(24),Z => Y(24));
+	mux25: mux2_1 port map(in0 => s1,in1 => s0,S => B(25),Z => Y(25));
+	mux26: mux2_1 port map(in0 => s1,in1 => s0,S => B(26),Z => Y(26));
+	mux27: mux2_1 port map(in0 => s1,in1 => s0,S => B(27),Z => Y(27));
+	mux28: mux2_1 port map(in0 => s1,in1 => s0,S => B(28),Z => Y(28));
+	mux29: mux2_1 port map(in0 => s1,in1 => s0,S => B(29),Z => Y(29));
+	mux30: mux2_1 port map(in0 => s1,in1 => s0,S => B(30),Z => Y(30));
+	mux31: mux2_1 port map(in0 => s1,in1 => s0,S => B(31),Z => Y(31));
+	
+
+    
+    
+
+end Behavioral;

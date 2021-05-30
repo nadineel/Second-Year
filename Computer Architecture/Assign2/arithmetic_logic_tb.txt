@@ -1,0 +1,126 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 15.11.2020 21:42:16
+-- Design Name: 
+-- Module Name: arithmetic_logic_tb - testBench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity arithmetic_logic_tb is
+--  Port ( );
+end arithmetic_logic_tb;
+
+architecture testBench of arithmetic_logic_tb is
+
+component arithmetic_logic
+  	port(
+          	A : in std_logic_vector (31 downto 0);
+          	B : in std_logic_vector (31 downto 0);
+          	s0 : in std_logic;
+          	s1 : in std_logic;
+          	c_in : in std_logic;
+          	G : out std_logic_vector (31 downto 0);
+          	c_out : out std_logic;
+          	V : out std_logic);
+  end component;
+
+  signal c_in: std_logic;
+  signal A: std_logic_vector (31 downto 0);
+  signal B: std_logic_vector (31 downto 0);
+  signal s0: std_logic;
+  signal s1: std_logic;
+  signal G: std_logic_vector (31 downto 0);
+  signal c_out: std_logic;
+  signal V: std_logic;
+
+    
+
+begin
+
+  uut: arithmetic_logic port map ( c_in  => c_in,
+                             A     => A,
+                             B     => B,
+                             s0    => s0,
+                             s1    => s1,
+                             G     => G,
+                             c_out => c_out,
+                             V     => V );
+
+  stimulus: process
+  begin
+  
+    wait for 10 ns;
+  
+    s0 <= '0';
+    s1 <= '0';
+    B <= x"00000000"; 
+    A <= x"00000000"; 
+    c_in <= '1';
+    wait for 10 ns;
+
+
+
+    s0 <= '0';
+    s1 <= '1';
+    A <= x"FFFFFFFF";
+    B <= x"FFFFFFFF";
+    c_in <= '0';
+    wait for 10 ns;
+
+    s0 <= '0';
+    s1 <= '1';
+    A <= x"00000000";
+    B <= x"00000000";
+    c_in <= '1';
+    wait for 10 ns;
+
+    s0 <= '1';
+    s1 <= '0';
+    A <= x"FFFFFFFF";
+    B <= x"FFFFFFFF";
+    c_in <= '0';
+    wait for 10 ns;
+
+    s0 <= '1';
+    s1 <= '1';
+    B <= x"aaaaaaaa"; 
+    A <= x"aaaaaaaa"; 
+    c_in <= '1';
+    wait for 10 ns;
+    
+    s0 <= '1';
+    s1 <= '0';
+    A <= x"aaaaaaaa"; 
+    A <= x"aaaaaaaa"; 
+    c_in <= '1';
+
+--   wait;
+  end process;
+
+
+end testBench;

@@ -1,0 +1,113 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 23.12.2020 17:44:07
+-- Design Name: 
+-- Module Name: instructionReg_tb - testbench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity instructionReg_tb is
+--  Port ( );
+end instructionReg_tb;
+
+architecture testbench of instructionReg_tb is
+
+component instructionReg
+Port ( clk : in  STD_LOGIC; 
+        IL : in  STD_LOGIC;
+        IR_in : in  STD_LOGIC_VECTOR (31 downto 0);
+        opcode : out  STD_LOGIC_VECTOR (16 downto 0);
+        DR : out  STD_LOGIC_VECTOR (4 downto 0);
+        SA : out  STD_LOGIC_VECTOR (4 downto 0);
+        SB : out  STD_LOGIC_VECTOR (4 downto 0)
+        );
+        
+end component;
+signal        clk :  STD_LOGIC; 
+signal        IL        : STD_LOGIC;
+signal        IR_in     :  STD_LOGIC_VECTOR (31 downto 0);
+signal        opcode : STD_LOGIC_VECTOR (16 downto 0);
+signal        DR    : STD_LOGIC_VECTOR (4 downto 0);
+signal        SA    : STD_LOGIC_VECTOR (4 downto 0);
+signal        SB    : STD_LOGIC_VECTOR (4 downto 0);
+
+begin
+    uut: instructionReg PORT MAP (
+         clk=>clk       ,
+         IL    =>IL    ,
+         IR_in =>IR_in ,
+         opcode=>opcode,
+         DR    =>DR    ,
+         SA    =>SA    ,
+         SB    =>SB    );
+         
+         
+   stimulus:process
+   begin
+   
+   clk<='0';
+   IR_in<=x"ffffffff";
+   IL<='0';
+   
+   wait for 5 ns;
+   
+   IL<='1';
+   
+   wait for 5 ns;
+   
+   clk<='1';
+   wait for 5ns;
+   IL<='0';
+   
+   wait for 5 ns;
+   IL<='1';
+   wait for 5 ns;
+   
+   clk<='0';
+   IR_in<=x"10101010";
+   IL<='0';
+   
+   wait for 5 ns;
+   
+   IL<='1';
+   
+   wait for 5 ns;
+   
+   clk<='1';
+   wait for 5ns;
+   IL<='0';
+   
+   wait for 5 ns;
+   IL<='1';
+   wait for 5 ns;
+   
+   
+   wait;
+   end process;
+         
+end testbench;

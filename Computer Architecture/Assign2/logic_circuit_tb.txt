@@ -1,0 +1,115 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 15.11.2020 21:52:14
+-- Design Name: 
+-- Module Name: logic_circuit_tb - testBench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity logic_circuit_tb is
+--  Port ( );
+end logic_circuit_tb;
+
+architecture testBench of logic_circuit_tb is
+
+component logic_circuit
+      port ( 
+  		 A : in  STD_LOGIC_VECTOR (31 downto 0);
+        B : in  STD_LOGIC_VECTOR (31 downto 0);
+        S : in  STD_LOGIC_VECTOR (1 downto 0);
+        G : out  STD_LOGIC_VECTOR (31 downto 0));
+  end component;
+
+  signal A: std_logic_vector (31 downto 0);
+  signal B: std_logic_vector (31 downto 0);
+  signal s0: std_logic;
+  signal s1: std_logic;
+  signal G: std_logic_vector (31 downto 0);
+
+    
+
+begin
+
+  uut: logic_circuit port map ( A  => A,
+                                B  => B,
+                                S(0) => s0,
+                                S(1) => s1,
+                                G  => G );
+
+  stimulus: process
+  begin
+  
+    wait for 10ns;
+    A <= x"00000000";
+    B <= x"00000000";
+    s0 <= '0';
+    s1 <= '0';
+   
+    
+    wait for 10ns;
+    s0 <= '0';
+    s1 <= '1';
+    
+    
+    wait for 10ns;
+    s0 <= '1';
+    s1 <= '0';
+    
+    
+    wait for 10ns;
+    s0 <= '1';
+    s1 <= '1';
+    
+    
+    wait for 10ns;
+    A <= x"FFFFFFFF";
+    B <= x"FFFFFFFF";
+    s0 <= '0';
+    s1 <= '0';
+    
+    
+    wait for 10ns;
+    s0 <= '0';
+    s1 <= '1';
+    
+    
+    wait for 10ns;
+    s0 <= '1';
+    s1 <= '0';
+    
+    
+    wait for 10ns;
+    s0 <= '1';
+    s1 <= '1';
+    
+
+    wait for 10 ns;
+  end process;
+
+
+end testBench;

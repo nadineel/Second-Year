@@ -1,0 +1,113 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 23.12.2020 17:44:07
+-- Design Name: 
+-- Module Name: CAR_tb - testbench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity CAR_tb is
+--  Port ( );
+end CAR_tb;
+
+architecture testbench of CAR_tb is
+
+component CAR
+Port (  
+        clk  : in  STD_LOGIC;
+        in1  : in  STD_LOGIC;
+        in17 : in  STD_LOGIC_VECTOR (16 downto 0);
+        out17: out  STD_LOGIC_VECTOR (16 downto 0));
+end component;
+
+
+signal clk : STD_LOGIC;
+signal in1 : STD_LOGIC;                            
+signal in17 : STD_LOGIC_VECTOR (16 downto 0);      
+signal out17: STD_LOGIC_VECTOR (16 downto 0);
+
+constant clock:time:=20 ns;
+
+begin
+
+    uut: CAR PORT MAP (
+         
+         clk=>clk,
+         in1   =>in1  ,
+         in17  =>in17 ,
+         out17 =>out17);
+---
+stimulus: process
+  begin
+
+      clk <= '0';    
+      wait for clock;
+      clk <= '1';
+      wait for clock;
+--load the CAR with input
+      clk <= '0';
+      in17 <= "01010101010101010";
+      wait for clock;
+      clk <= '0';
+      wait for clock;
+
+      clk <= '0';
+--input becomes output initially : 0aaaa     
+      in1 <= '1';
+      wait for clock;
+      clk <= '1';
+      wait for clock;
+--increment output once: 0aaab
+      clk <= '0';
+      in1 <= '0';      
+      wait for clock;
+      clk <= '1';
+      wait for clock;
+--increment output twice:0aaac
+      clk <= '0';      
+      wait for clock;
+      clk <= '1';
+      wait for clock;
+--increment output thrice: 0aaad      
+      clk <= '0';
+      wait for clock;
+      clk <= '1';
+      wait for clock;
+--new input loaded to CAR: 00001      
+      clk <= '0';
+      in1 <= '1';
+      in17 <= "00000000000000001";
+      wait for clock;
+      clk <= '1';
+      
+    wait;
+  end process;
+
+
+
+end testbench;

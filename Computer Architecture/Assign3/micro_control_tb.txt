@@ -1,0 +1,229 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 26.12.2020 22:40:34
+-- Design Name: 
+-- Module Name: micro_con_tb - testbench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity micro_con_tb is
+--  Port ( );
+end micro_con_tb;
+
+architecture testbench of micro_con_tb is
+
+component micro_con port(
+       Vflag : IN std_logic;
+        Cflag : IN std_logic;
+        Nflag : IN std_logic;
+        Zflag : IN std_logic;
+
+        instruction : IN std_logic_vector(31 DOWNTO 0);
+        clk : IN std_logic;
+        reset : IN std_logic;
+
+        PCout : OUT std_logic_vector(31 DOWNTO 0);
+        
+        FL: OUT std_logic;
+        RZ: OUT std_logic;
+        RN: OUT std_logic;
+        RC: OUT std_logic;
+        RV: OUT std_logic;
+        
+        TD : OUT std_logic;
+        TA : OUT std_logic;
+        TB : OUT std_logic;
+
+        MB : OUT std_logic;
+        FS : OUT std_logic_vector(4 DOWNTO 0);
+        MD : OUT std_logic;
+        RW : OUT std_logic;
+        MM : OUT std_logic;
+        MW : OUT std_logic;
+
+        
+        PL : OUT std_logic;
+        PI : OUT std_logic;
+        IL : OUT std_logic;
+        MC : OUT std_logic;
+        MS : OUT std_logic_vector(2 DOWNTO 0);
+        NA : OUT std_logic_vector(16 DOWNTO 0);
+
+        DR : OUT std_logic_vector(4 DOWNTO 0);
+        SA : OUT std_logic_vector(4 DOWNTO 0);
+        SB : OUT std_logic_vector(4 DOWNTO 0));
+end component;
+
+
+
+--datapath control
+signal Vflag        :  std_logic;
+signal Cflag        :  std_logic;
+signal Nflag        :  std_logic;
+signal Zflag        :  std_logic;
+
+signal instruction  :  std_logic_vector(31 DOWNTO 0);
+signal clk          :  std_logic;
+signal reset        :  std_logic;
+
+signal pc_out       :  std_logic_vector(31 DOWNTO 0);
+
+signal TD           :  std_logic;
+signal TA           :  std_logic;
+signal TB           :  std_logic;
+
+signal MB           :  std_logic;
+signal FS           :  std_logic_vector(4 DOWNTO 0);
+signal MD           :  std_logic;
+signal RW           :  std_logic;
+signal MM           :  std_logic;
+signal MW           :  std_logic;
+
+signal RV           :  std_logic;
+signal RC           :  std_logic;
+signal RN           :  std_logic;
+signal RZ           :  std_logic;
+signal FL           :  std_logic;
+
+--sequence control
+signal NA           :  std_logic_vector(16 DOWNTO 0);
+signal MS           :  std_logic_vector(2 DOWNTO 0);
+signal MC           :  std_logic;
+signal IL           :  std_logic;
+signal PI           :  std_logic;
+signal PL           :  std_logic;
+
+--from IR
+signal DR           :  std_logic_vector(4 DOWNTO 0);
+signal SA           :  std_logic_vector(4 DOWNTO 0);
+signal SB           :  std_logic_vector(4 DOWNTO 0);
+
+constant clock:time:=50 ns;
+
+begin
+ uut: micro_con port map(
+        Vflag=> Vflag,      
+        Cflag=> Cflag,      
+        Nflag=> Nflag ,     
+        Zflag=> Zflag  ,    
+
+        instruction=>instruction,
+        clk =>  clk,        
+        reset=> reset,      
+
+        PCout=>pc_out ,     
+
+        TD =>   TD,         
+        TA =>   TA ,        
+        TB =>   TB  ,       
+
+        MB =>   MB   ,      
+        FS =>   FS   ,     
+        MD =>   MD   ,    
+        RW =>   RW   ,   
+        MM =>   MM   ,  
+        MW =>   MW   , 
+       
+        RV =>   RV,         
+        RC =>   RC,         
+        RN =>   RN ,        
+        RZ =>   RZ,         
+        FL =>   FL,         
+
+        --sequ--sequence ence control
+        NA =>   NA,         
+        MS =>   MS,         
+        MC =>   MC,         
+        IL =>   IL,         
+        PI =>   PI,         
+        PL =>   PL,         
+        
+        --from--from IR  
+        DR =>   DR ,        
+        SA =>   SA ,        
+        SB =>   SB         
+            
+            );
+            
+     stimulus:process
+     begin 
+     
+        --initialise flags    
+        Vflag <= '0';
+        Cflag <= '0';
+        Nflag <= '0';
+        Zflag <= '0';
+
+        --Test RESET, pc_out is0x00000000
+        clk <= '1';
+        reset <= '1';
+        WAIT FOR clock;
+        clk <= '0';
+        reset <= '0';
+        WAIT FOR clock;
+
+        --Pass an empty instruction 
+        instruction <= x"00000000";
+--output
+--    pc_out= 00000001
+--    FS:00010
+--    Next address: C0
+--    MS:001
+--    DR,SA,SB=00000
+--    RW,MB=1
+
+--output is similar to what is encoded from control memory at mem(0)
+
+        clk <= '1';
+        WAIT FOR clock;
+        clk <= '0';
+        WAIT FOR clock;
+
+
+        --Pass the instruction 0x0400
+        instruction <= x"0000A96C";
+        --
+        --  OPCODE             DR|SA|SB
+        --[00000000000000 010][A][B][C] FROM THE INSTRUCTION
+        --output: Next address:C1
+--                    IL,PI,MM=1
+--                    FS:00000
+--                    PC_out=00000001
+
+--output is similar to what is encoded from control memory at mem(C0)
+
+        clk <= '1';
+        WAIT FOR clock;
+        clk <= '0';
+      
+     wait for clock;
+     wait;
+     
+     end process;
+     
+end testbench;

@@ -1,0 +1,47 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 23.12.2020 17:44:07
+-- Design Name: 
+-- Module Name: extend - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity extend is
+  Port (in_extend : in  STD_LOGIC_VECTOR (9 downto 0);
+        out_extend : out  STD_LOGIC_VECTOR (31 downto 0)
+   );
+end extend;
+
+architecture Behavioral of extend is
+    
+begin
+
+    out_extend(9 downto 0)<=in_extend after 1 ns; 
+    out_extend(31 downto 10)<="0000000000000000000000" after 1 ns when in_extend(9)='0'
+    else "1111111111111111111111" after 1 ns when in_extend(9)='1';
+end Behavioral;

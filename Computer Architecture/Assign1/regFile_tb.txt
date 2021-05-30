@@ -1,0 +1,416 @@
+----------------------------------------------------------------------------------
+-- Company: TCD
+-- Engineer: Bernadine Lao
+-- 
+-- Create Date: 26.10.2020 12:36:09
+-- Design Name: 
+-- Module Name: regFile_tb - Behavior
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+ENTITY regFile_tb IS
+END regFile_tb;
+
+ARCHITECTURE Behavior OF regFile_tb IS
+    COMPONENT regFile
+    PORT ( src_s0: in std_logic_vector (4 downto 0);
+        des_A: in std_logic_vector (4 downto 0);
+        Clk: in std_logic;
+        data_src : in  STD_LOGIC;
+        data : in  STD_LOGIC_VECTOR (31 downto 0);
+        reg000: out std_logic_vector(31 downto 0);
+        reg001: out std_logic_vector(31 downto 0);
+        reg002: out std_logic_vector(31 downto 0);
+        reg003: out std_logic_vector(31 downto 0);
+        reg004: out std_logic_vector(31 downto 0);
+        reg005: out std_logic_vector(31 downto 0);
+        reg006: out std_logic_vector(31 downto 0);
+        reg007: out std_logic_vector(31 downto 0);
+        reg008: out std_logic_vector(31 downto 0);
+        reg009: out std_logic_vector(31 downto 0);
+        reg010: out std_logic_vector(31 downto 0);
+        reg011: out std_logic_vector(31 downto 0);
+        reg012: out std_logic_vector(31 downto 0);
+        reg013: out std_logic_vector(31 downto 0);
+        reg014: out std_logic_vector(31 downto 0);
+        reg015: out std_logic_vector(31 downto 0);
+        reg016: out std_logic_vector(31 downto 0);
+        reg017: out std_logic_vector(31 downto 0);
+        reg018: out std_logic_vector(31 downto 0);
+        reg019: out std_logic_vector(31 downto 0);
+        reg020: out std_logic_vector(31 downto 0);
+        reg021: out std_logic_vector(31 downto 0);
+        reg022: out std_logic_vector(31 downto 0);
+        reg023: out std_logic_vector(31 downto 0);
+        reg024: out std_logic_vector(31 downto 0);
+        reg025: out std_logic_vector(31 downto 0);
+        reg026: out std_logic_vector(31 downto 0);
+        reg027: out std_logic_vector(31 downto 0);
+        reg028: out std_logic_vector(31 downto 0);
+        reg029: out std_logic_vector(31 downto 0);
+        reg030: out std_logic_vector(31 downto 0);
+        reg031: out std_logic_vector(31 downto 0)
+        );
+    END COMPONENT;
+    
+    --Inputs
+    Signal src_s0: std_logic_vector (4 downto 0);
+    Signal    des_A: std_logic_vector (4 downto 0);
+    Signal    Clk: std_logic;
+    Signal    data_src :  STD_LOGIC;
+    Signal    data :  STD_LOGIC_VECTOR (31 downto 0);
+    --Outputs
+    Signal    reg000:  std_logic_vector(31 downto 0);
+    Signal    reg001:  std_logic_vector(31 downto 0);
+    Signal    reg002:  std_logic_vector(31 downto 0);
+    Signal   reg003:  std_logic_vector(31 downto 0);
+    Signal    reg004:  std_logic_vector(31 downto 0);
+    Signal    reg005:  std_logic_vector(31 downto 0);
+    Signal    reg006:  std_logic_vector(31 downto 0);
+    Signal    reg007:  std_logic_vector(31 downto 0);
+    Signal    reg008:  std_logic_vector(31 downto 0);
+    Signal    reg009:  std_logic_vector(31 downto 0);
+    Signal    reg010:  std_logic_vector(31 downto 0);
+    Signal    reg011:  std_logic_vector(31 downto 0);
+    Signal    reg012:  std_logic_vector(31 downto 0);
+    Signal    reg013:  std_logic_vector(31 downto 0);
+    Signal    reg014:  std_logic_vector(31 downto 0);
+    Signal    reg015:  std_logic_vector(31 downto 0);
+    Signal    reg016:  std_logic_vector(31 downto 0);
+    Signal    reg017:  std_logic_vector(31 downto 0);
+    Signal    reg018:  std_logic_vector(31 downto 0);
+    Signal    reg019:  std_logic_vector(31 downto 0);
+    Signal    reg020:  std_logic_vector(31 downto 0);
+    Signal    reg021:  std_logic_vector(31 downto 0);
+    Signal    reg022:  std_logic_vector(31 downto 0);
+    Signal    reg023:  std_logic_vector(31 downto 0);
+    Signal    reg024:  std_logic_vector(31 downto 0);
+    Signal    reg025:  std_logic_vector(31 downto 0);
+    Signal    reg026:  std_logic_vector(31 downto 0);
+    Signal    reg027:  std_logic_vector(31 downto 0);
+    Signal    reg028:  std_logic_vector(31 downto 0);
+    Signal    reg029:  std_logic_vector(31 downto 0);
+    Signal    reg030:  std_logic_vector(31 downto 0);
+    Signal    reg031:  std_logic_vector(31 downto 0);
+    Signal  myClock: std_logic :='0';
+    
+BEGIN
+ 
+	-- Instantiate the Unit Under Test (UUT)
+   uut: regFile PORT MAP (
+   src_s0 =>src_s0,
+   des_A =>des_A,
+   Clk=>Clk,
+   data_src =>data_src,
+   data    =>data,
+   reg000  =>reg000,
+   reg001  =>reg001,
+   reg002  =>reg002,
+   reg003  =>reg003,
+   reg004  =>reg004,
+   reg005  =>reg005,
+   reg006  =>reg006,
+   reg007  =>reg007,
+   reg008  =>reg008,
+   reg009  =>reg009,
+   reg010  =>reg010,
+   reg011  =>reg011,
+   reg012  =>reg012,
+   reg013  =>reg013,
+   reg014  =>reg014,
+   reg015  =>reg015,
+   reg016  =>reg016,
+   reg017  =>reg017,
+   reg018  =>reg018,
+   reg019  =>reg019,
+   reg020  =>reg020,
+   reg021  =>reg021,
+   reg022  =>reg022,
+   reg023  =>reg023,
+   reg024  =>reg024,
+   reg025  =>reg025,
+   reg026  =>reg026,
+   reg027  =>reg027,
+   reg028  =>reg028,
+   reg029  =>reg029,
+   reg030  =>reg030,
+   reg031  =>reg031
+   );
+    myClock <= not myClock after 5ns;
+    Clk<=myClock; 
+    
+    
+   stim_proc: process
+    begin
+    
+    --places Student ID that decrements to all the regisers
+    wait for 10 ns; 
+    data_src<='0';
+    data<=x"19333627";
+    des_A <= "00000";
+    
+    wait for 10 ns;
+    data<=x"19333627";    
+    des_A<= "00000";
+    
+    wait for 10 ns;
+    data<=x"19333626";
+    des_A<="00001";
+    
+    wait for 10 ns;
+    data<=x"19333625";
+    des_A<="00010";
+    
+    wait for 10 ns;
+    data<=x"19333624";
+    des_A<="00011";
+    
+    wait for 10 ns;
+    data<=x"19333623";
+    des_A<="00100";
+    
+    wait for 10 ns;
+    data<=x"19333622";
+    des_A<="00101";
+    
+    wait for 10 ns;
+    data<=x"19333621";
+    des_A<="00110";
+    
+    wait for 10 ns;
+    data<=x"19333620";
+    des_A<="00111";
+    
+    wait for 10 ns;
+    data<=x"19333619";
+    des_A<="01000";
+    
+    wait for 10 ns;
+    data<=x"19333618";
+    des_A<="01001";
+    
+    wait for 10 ns;
+    data<=x"19333617";
+    des_A<="01010";
+    
+    wait for 10 ns;
+    data<=x"19333616";
+    des_A<="01011";
+    
+    wait for 10 ns;
+    data<=x"19333615";
+    des_A<="01100";
+    
+    wait for 10 ns;
+    data<=x"19333614";
+    des_A<="01101";
+    
+    wait for 10 ns;
+    data<=x"19333613";
+    des_A<="01110";
+    
+    wait for 10 ns;
+    data<=x"19333612";
+    des_A<="01111";
+    
+    wait for 10 ns;
+    data<=x"19333611";
+    des_A<="10000";
+    
+    wait for 10 ns;
+    data<=x"19333610";
+    des_A<="10001";
+    
+    wait for 10 ns;
+    data<=x"19333609";
+    des_A<="10010";
+    
+    wait for 10 ns;
+    data<=x"19333608";
+    des_A<="10011";
+    
+    wait for 10 ns;
+    data<=x"19333607";
+    des_A<="10100";
+    
+    wait for 10 ns;
+    data<=x"19333606";
+    des_A<="10101";
+    
+    wait for 10 ns;
+    data<=x"19333605";
+    des_A<="10110";
+    
+    wait for 10 ns;
+    data<=x"19333604";
+    des_A<="10111";
+    
+    wait for 10 ns;
+    data<=x"19333603";
+    des_A<="11000";
+    
+    wait for 10 ns;
+    data<=x"19333602";
+    des_A<="11001";
+    
+    wait for 10 ns;
+    data<=x"19333601";
+    des_A<="11010";
+    
+    wait for 10 ns;
+    data<=x"19333600";
+    des_A<="11011";
+    
+    wait for 10 ns;
+    data<=x"19333599";
+    des_A<="11100";
+    
+    wait for 10 ns;
+    data<=x"19333598";
+    des_A<="11101";
+    
+    wait for 10 ns;
+    data<=x"19333597";
+    des_A<="11110";
+    
+    wait for 10 ns;
+    data<=x"19333596";
+    des_A<="11111";
+    
+  -------------------------------
+  --    --transfer content from one reg to the one next to it
+
+     wait for 10 ns; 
+     data_src<='0';
+    data <= x"babababa";
+    des_A <="00000";
+       
+    wait for 10 ns;
+
+    src_s0 <= "00000";
+    des_A<="00001";
+ ---2   
+     wait for 10 ns; 
+    
+    data <= x"bbbbbbbb";
+    des_A <="00010";
+       
+    wait for 10 ns;
+    
+    src_s0 <= "00000";
+    des_A<="00011";
+    
+ ---3
+   wait for 10 ns; 
+    
+    data <= x"cccccccc";
+    des_A <="00100";
+       
+    wait for 10 ns;
+    
+    src_s0 <= "00000";
+    des_A<="00101";
+---4   
+     wait for 10 ns; 
+    
+    data <= x"dddddddd";
+    des_A <="00110";
+       
+    wait for 10 ns;
+    
+    src_s0 <= "00000";
+    des_A<="00111";
+ ---5
+   wait for 10 ns; 
+    
+    data <= x"eeeeeeee";
+    des_A <="01000";
+       
+    wait for 10 ns;
+    
+    src_s0 <= "00000";
+    des_A<="01001";
+ 
+ ---6   
+     wait for 10 ns; 
+
+    data <= x"bcbcbcbc";
+    des_A <="01010";
+       
+    wait for 10 ns;
+    
+    src_s0 <= "00000";
+    des_A<="01011";
+    
+ ---7
+   wait for 10 ns; 
+     
+    data <= x"dededede";
+    des_A <="01100";
+       
+    wait for 10 ns;
+
+    src_s0 <= "00000";
+    des_A<="01101";
+
+---8   
+     wait for 10 ns; 
+
+    data <= x"ffffffff";
+    des_A <="01110";
+       
+    wait for 10 ns;
+     
+    src_s0 <= "00000";
+    des_A<="01111";
+    
+ ---9
+   wait for 10 ns; 
+     
+    data <= x"eeeeeeee";
+    des_A <="10000";
+       
+    wait for 10 ns;
+   
+    src_s0 <= "00000";
+    des_A<="10001";
+    
+ ---10
+   wait for 10 ns; 
+     data_src <= '0';
+    data <= x"fefefefe";
+    des_A <="10010";
+       
+    wait for 10 ns;
+    
+    src_s0 <= "00000";
+    des_A<="10011";
+    
+    
+
+    wait;   
+    end process;
+END;

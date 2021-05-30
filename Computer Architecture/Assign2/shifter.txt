@@ -1,0 +1,284 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 10.11.2020 23:56:40
+-- Design Name: 
+-- Module Name: shifter_unit - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity shifter_unit is
+  Port ( B : in  STD_LOGIC_VECTOR (31 downto 0);
+         S : in  STD_LOGIC_VECTOR (1 downto 0);
+         H : out  STD_LOGIC_VECTOR (31 downto 0)
+         );
+end shifter_unit;
+
+architecture Behavioral of shifter_unit is
+
+    COMPONENT mux3_32bit
+    Port ( in0 : in  STD_LOGIC;
+           in1 : in  STD_LOGIC;
+           in2 : in  STD_LOGIC;
+           S  : in  STD_LOGIC_VECTOR (1 downto 0);
+           H  : out  STD_LOGIC        );                                                                         
+    END COMPONENT;
+    
+    signal IR, IL : std_logic;
+begin
+
+
+
+mux3_32bit00: mux3_32bit PORT MAP(
+          in0 => B(0),
+          in1 => B(1),
+          in2 =>IL,
+          S  => S,
+          H  => H(0) 
+    );
+    
+    mux3_32bit01: mux3_32bit PORT MAP(
+          in0 => B(1),
+          in1 => B(2),
+          in2 => B(0),
+          S  =>S,
+          H  => H(1)
+    );
+    mux3_32bit02: mux3_32bit PORT MAP(
+         in0 => B(2),
+          in1 =>B(3),
+          in2 =>B(1),
+          S  =>S,
+          H  => H(2)
+    );
+    mux3_32bit03: mux3_32bit PORT MAP(
+         in0 => B(3),
+          in1 =>B(4),
+          in2 =>B(2),
+          S  =>S,
+          H  => H(3)
+    );
+    mux3_32bit04: mux3_32bit PORT MAP(
+          in0 => B(4),
+          in1 =>B(5),
+          in2 =>B(3),
+          S  =>S,
+          H  => H(4)
+    );
+    mux3_32bit05: mux3_32bit PORT MAP(
+          in0 => B(5),
+          in1 =>B(6),
+          in2 =>B(4),
+          S  =>S,
+          H  => H(5)
+    );
+    mux3_32bit06: mux3_32bit PORT MAP(
+          in0 => B(6),
+          in1 =>B(7),
+          in2 =>B(5),
+          S  =>S,
+          H  => H(6)
+    );
+    mux3_32bit07: mux3_32bit PORT MAP(
+          in0 => B(7),
+          in1 =>B(8),
+          in2 =>B(6),
+          S  =>S,
+          H  => H(7)
+    );
+    mux3_32bit08: mux3_32bit PORT MAP(
+          in0 => B(8),
+          in1 =>B(9),
+          in2 =>B(7),
+          S  =>S,
+          H  => H(8)
+    );
+    mux3_32bit09: mux3_32bit PORT MAP(
+          in0 => B(9),
+          in1 =>B(10),
+          in2 =>B(8),
+          S  =>S,
+          H  => H(9)
+    );
+    mux3_32bit10: mux3_32bit PORT MAP(
+          in0 => B(10),
+          in1 =>B(11),
+          in2 =>B(9),
+          S  =>S,
+          H  => H(10)
+    );
+    mux3_32bit11: mux3_32bit PORT MAP(
+          in0 => B(11),
+          in1 =>B(12),
+          in2 =>B(10),
+          S  =>S,
+          H  => H(11)
+    );
+    mux3_32bit12: mux3_32bit PORT MAP(
+          in0 => B(12),
+          in1 =>B(13),
+          in2 =>B(11),
+          S  =>S,
+          H  => H(12)
+    );
+    mux3_32bit13: mux3_32bit PORT MAP(
+          in0 => B(13),
+          in1 =>B(14),
+          in2 =>B(12),
+          S  =>S,
+          H  => H(13)
+    );
+    mux3_32bit14: mux3_32bit PORT MAP(
+          in0 => B(14),
+          in1 =>B(15),
+          in2 =>B(13),
+          S  =>S,
+          H  => H(14)
+    );
+    mux3_32bit15: mux3_32bit PORT MAP(
+          in0 => B(15),
+          in1 =>B(16),
+          in2 =>B(14),
+          S  =>S,
+          H  => H(15)
+    );
+    mux3_32bit16: mux3_32bit PORT MAP(
+          in0 => B(16),
+          in1 =>B(17),
+          in2 =>B(15),
+          S  =>S,
+          H  => H(16)
+    );
+    mux3_32bit17: mux3_32bit PORT MAP(
+          in0 => B(17),
+          in1 =>B(18),
+          in2 =>B(16),
+          S  =>S,
+          H  => H(17)
+    );
+    mux3_32bit18: mux3_32bit PORT MAP(
+          in0 => B(18),
+          in1 =>B(19),
+          in2 =>B(17),
+          S  =>S,
+          H  => H(18)
+    );
+    mux3_32bit19: mux3_32bit PORT MAP(
+          in0 => B(19),
+          in1 =>B(20),
+          in2 =>B(18),
+          S  =>S,
+          H  => H(19)
+    );
+    mux3_32bit20: mux3_32bit PORT MAP(
+          in0 => B(20),
+          in1 =>B(21),
+          in2 =>B(19),
+          S  =>S,
+          H  => H(20)
+    );
+    mux3_32bit21: mux3_32bit PORT MAP(
+          in0 => B(21),
+          in1 =>B(22),
+          in2 =>B(20),
+          S  =>S,
+          H  => H(21)
+    );
+    mux3_32bit22: mux3_32bit PORT MAP(
+          in0 => B(22),
+          in1 =>B(23),
+          in2 =>B(21),
+          S  =>S,
+          H  => H(22)
+    );
+    mux3_32bit23: mux3_32bit PORT MAP(
+          in0 => B(23),
+          in1 =>B(24),
+          in2 =>B(22),
+          S  =>S,
+          H  => H(23)
+    );
+    mux3_32bit24: mux3_32bit PORT MAP(
+          in0 => B(24),
+          in1 =>B(25),
+          in2 =>B(23),
+          S  =>S,
+          H  => H(24)
+    );
+    mux3_32bit25: mux3_32bit PORT MAP(
+          in0 => B(25),
+          in1 =>B(26),
+          in2 =>B(24),
+          S  =>S,
+          H  => H(25)
+    );
+    mux3_32bit26: mux3_32bit PORT MAP(
+          in0 => B(26),
+          in1 =>B(27),
+          in2 =>B(25),
+          S  =>S,
+          H  => H(26)
+    );
+    mux3_32bit27: mux3_32bit PORT MAP(
+          in0 => B(27),
+          in1 =>B(28),
+          in2 =>B(26),
+          S  =>S,
+          H  => H(27)
+    );
+    mux3_32bit28: mux3_32bit PORT MAP(
+          in0 => B(28),
+          in1 =>B(29),
+          in2 =>B(27),
+          S  =>S,
+          H  => H(28)
+    );
+    mux3_32bit29: mux3_32bit PORT MAP(
+          in0 => B(29),
+          in1 =>B(30),
+          in2 =>B(28),
+          S  =>S,
+          H  => H(29)
+    );
+    mux3_32bit30: mux3_32bit PORT MAP(
+          in0 => B(30),
+          in1 =>B(31),
+          in2 =>B(29),
+          S  =>S,
+          H  => H(30)
+    );
+    mux3_32bit31: mux3_32bit PORT MAP(
+          in0 => B(31),
+          in1 =>IR,
+          in2 =>B(30),
+          S  =>S,
+          H  => H(31)
+    );
+   IR <= '0';
+IL <= '0'; 
+
+end Behavioral;

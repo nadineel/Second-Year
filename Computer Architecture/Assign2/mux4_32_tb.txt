@@ -1,0 +1,88 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 15.11.2020 22:27:31
+-- Design Name: 
+-- Module Name: mux4_32bit_tb - testBench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity mux4_32bit_tb is
+--  Port ( );
+end mux4_32bit_tb;
+
+architecture testBench of mux4_32bit_tb is
+
+component mux4_32
+      port ( 
+          in_bit : in  STD_LOGIC_VECTOR (3 downto 0);
+        S : in  STD_LOGIC_VECTOR (1 downto 0);
+        G : out  STD_LOGIC);
+  end component;
+
+  signal s0: std_logic;
+  signal s1: std_logic;
+  signal in0: std_logic;
+  signal in1: std_logic;
+  signal in2: std_logic;
+  signal in3: std_logic;
+  signal G_out: std_logic;
+
+begin
+
+  uut: mux4_32 port map ( S(0)   => s0,
+                         S(1)   => s1,
+                         in_bit(0)  => in0,
+                         in_bit(1)  => in1,
+                         in_bit(2)  => in2,
+                         in_bit(3)  => in3,
+                         G => G_out );
+ 
+  stimulus: process
+  begin
+  
+    in0 <= '1';
+    in1 <= '0';
+    in2 <= '1';
+    in3 <= '0';
+    s0 <= '0';
+    s1 <= '0';
+    wait for 10 ns;
+
+    s1 <= '1'; 
+    wait for 10 ns;
+
+    s0 <= '1';
+    s1 <= '0';
+    wait for 10 ns;
+
+    s1 <= '1'; 
+    wait for 10 ns;
+  end process;
+
+
+end testBench;

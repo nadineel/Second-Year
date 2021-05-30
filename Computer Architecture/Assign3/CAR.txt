@@ -1,0 +1,96 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 23.12.2020 17:44:07
+-- Design Name: 
+-- Module Name: CAR - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.std_logic_unsigned.ALL;
+use IEEE.std_logic_arith.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity CAR is
+  Port (--reset  : in  STD_LOGIC;
+        clk  : in  STD_LOGIC;
+        in1 : in  STD_LOGIC;
+        in17 : in  STD_LOGIC_VECTOR (16 downto 0);
+        out17: out  STD_LOGIC_VECTOR (16 downto 0));
+end CAR;
+
+architecture Behavioral of CAR is
+
+component parallel_adder32 port(
+          X : in  STD_LOGIC_VECTOR (31 downto 0); 
+          Y : in  STD_LOGIC_VECTOR (31 downto 0);
+          c_in : in  STD_LOGIC;  
+          c_out : out  STD_LOGIC;
+          G : out  STD_LOGIC_VECTOR (31 downto 0);
+          V : out  STD_LOGIC 
+);
+end component;
+
+component register32 port(
+        D: in std_logic_vector (31 downto 0);
+        load: in std_logic;
+        Clk: in std_logic;
+        Q: out std_logic_vector(31 downto 0)
+);
+ end component;
+ 
+ signal adder_out:std_logic_vector (31 downto 0);
+ signal reg_in:std_logic_vector (31 downto 0);
+ signal reg_out:std_logic_vector (31 downto 0);
+ 
+ constant clock: Time:=1 ns;
+ 
+begin
+    adder: parallel_adder32 port map(
+            X =>reg_out,
+            Y =>x"00000001",      
+            c_in =>'0', 
+            G =>adder_out
+     );
+     
+    reg: register32 port map(
+    D=>reg_in,
+    load=>'1',
+    clk=>clk,
+    Q=>reg_out
+    );
+    
+    
+           
+   
+    
+    reg_in(16 downto 0)<=adder_out(16 downto 0) after clock when in1='0'
+    else in17 after clock when in1<='1';
+    reg_in(31 downto 17)<="000000000000000";
+    
+    out17<=reg_out(16 downto 0);
+
+
+end Behavioral;

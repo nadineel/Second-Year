@@ -1,0 +1,123 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 02.01.2021 22:42:59
+-- Design Name: 
+-- Module Name: flag_tb - testbench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity flag_tb is
+--  Port ( );
+end flag_tb;
+
+architecture testbench of flag_tb is
+
+component flag
+Port   (clk   : in  STD_LOGIC;
+        Vflag : IN std_logic;
+        Cflag : IN std_logic;
+        Nflag : IN std_logic;
+        Zflag : IN std_logic;
+        
+        RV    : IN std_logic;
+        RC    : IN std_logic;
+        RN    : IN std_logic;
+        RZ    : IN std_logic;
+        
+        FL    : IN std_logic;
+        
+        flagVector: OUT std_logic_vector(3 DOWNTO 0)
+  );
+end component;  
+
+signal clk   : STD_LOGIC;
+signal Vflag : std_logic;
+signal Cflag : std_logic;
+signal Nflag : std_logic;
+signal Zflag : std_logic;
+
+signal RV    : std_logic;
+signal RC    : std_logic;
+signal RN    : std_logic;
+signal RZ    : std_logic;
+
+signal FL    : std_logic;
+ 
+signal flagVector: std_logic_vector(3 DOWNTO 0);
+
+constant clock : time:=5 ns;
+
+begin
+ 
+ uut: flag port map(clk  =>clk,  
+                    Vflag=>Vflag,
+                    Cflag=>Cflag,
+                    Nflag=>Nflag,
+                    Zflag=>Zflag,
+                        
+                    RV  =>RV,   
+                    RC  =>RC,   
+                    RN  =>RN,   
+                    RZ  =>RZ,   
+                       
+                    FL  =>FL, 
+                    flagVector=>flagVector
+                    );  
+
+stimulus:process
+   begin
+   
+   --initialise flags
+    Vflag<='1';
+    Cflag<='0';
+    Nflag<='1';
+    Zflag<='1';
+    
+    RV<='1';
+    RC<='1';
+    RN<='0';
+    RZ<='1';
+    wait for clock;
+    --output are the flags: "1011"
+    clk<='0';
+    wait for clock;
+    FL<='0';
+    clk<='1';
+    wait for clock;
+    
+    --output are Rflags except RN : "0010"
+    clk<='0';
+    wait for clock;
+    FL<='1';
+    clk<='1';
+    wait for clock;
+    
+   wait;
+end process;   
+                    
+end testbench;                    

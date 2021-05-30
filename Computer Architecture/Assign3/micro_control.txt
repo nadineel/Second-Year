@@ -1,0 +1,323 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 26.12.2020 22:40:34
+-- Design Name: 
+-- Module Name: micro_con - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity micro_con is
+ Port (Vflag : IN std_logic;
+        Cflag : IN std_logic;
+        Nflag : IN std_logic;
+        Zflag : IN std_logic;
+
+        instruction : IN std_logic_vector(31 DOWNTO 0);
+        clk : IN std_logic;
+        reset : IN std_logic;
+
+        PCout : OUT std_logic_vector(31 DOWNTO 0);
+        
+        FL: OUT std_logic;
+        RZ: OUT std_logic;
+        RN: OUT std_logic;
+        RC: OUT std_logic;
+        RV: OUT std_logic;
+        
+        TD : OUT std_logic;
+        TA : OUT std_logic;
+        TB : OUT std_logic;
+
+        MB : OUT std_logic;
+        FS : OUT std_logic_vector(4 DOWNTO 0);
+        MD : OUT std_logic;
+        RW : OUT std_logic;
+        MM : OUT std_logic;
+        MW : OUT std_logic;
+
+        
+        PL : OUT std_logic;
+        PI : OUT std_logic;
+        IL : OUT std_logic;
+        MC : OUT std_logic;
+        MS : OUT std_logic_vector(2 DOWNTO 0);
+        NA : OUT std_logic_vector(16 DOWNTO 0);
+
+        DR : OUT std_logic_vector(4 DOWNTO 0);
+        SA : OUT std_logic_vector(4 DOWNTO 0);
+        SB : OUT std_logic_vector(4 DOWNTO 0)
+    );
+end micro_con;
+
+architecture Behavioral of micro_con is
+
+component control_memory port(FL : out std_logic; -- 0
+                            RZ : out std_logic; -- 1
+                            RN : out std_logic; -- 2
+                            RC : out std_logic; -- 3
+                            RV : out std_logic; -- 4
+                            
+                            MW : out std_logic; -- 5
+                            MM : out std_logic; -- 6
+                            RW : out std_logic; -- 7
+                            MD : out std_logic; -- 8
+                            FS : out std_logic_vector(4 downto 0); -- 9 to 13
+                            MB : out std_logic; -- 14
+                            TB : out std_logic; -- 15
+                            TA : out std_logic; -- 16
+                            TD : out std_logic; -- 17
+                            
+                            PL : out std_logic; -- 18
+                            PI : out std_logic; -- 19
+                            IL : out std_logic; -- 20
+                            MC : out std_logic; -- 21
+                            MS : out std_logic_vector(2 downto 0); -- 22 to 24
+                            NA : out std_logic_vector(16 downto 0); -- 25 to 41
+                            
+                            IN_CAR : in std_logic_vector(16 downto 0)
+                );
+end component;
+
+component CAR port(--reset  : in  STD_LOGIC;
+                clk  : in  STD_LOGIC;
+                
+                in1 : in  STD_LOGIC;
+                in17 : in  STD_LOGIC_VECTOR (16 downto 0);
+                out17: out  STD_LOGIC_VECTOR (16 downto 0)
+                );
+end component;
+
+component mux2_17 port(MC : in  STD_LOGIC;
+                    in0 : in  STD_LOGIC_VECTOR (16 downto 0);
+                    in1 : in  STD_LOGIC_VECTOR (16 downto 0);
+                    z : out  STD_LOGIC_VECTOR (16 downto 0)
+                      );
+end component;
+
+component instructionReg port(clk : in  STD_LOGIC; 
+                            IL : in  STD_LOGIC;
+                            IR_in : in  STD_LOGIC_VECTOR (31 downto 0);
+                            opcode : out  STD_LOGIC_VECTOR (16 downto 0);
+                            DR : out  STD_LOGIC_VECTOR (4 downto 0);
+                            SA : out  STD_LOGIC_VECTOR (4 downto 0);
+                            SB : out  STD_LOGIC_VECTOR (4 downto 0)
+                );
+end component;
+
+
+component flag port(clk : in  STD_LOGIC;
+                    Vflag : IN std_logic;
+                    Cflag : IN std_logic;
+                    Nflag : IN std_logic;
+                    Zflag : IN std_logic;
+                    
+                    RV : IN std_logic;
+                    RC : IN std_logic;
+                    RN : IN std_logic;
+                    RZ : IN std_logic;
+                    
+                    FL : IN std_logic;
+                    
+                    flagVector: OUT std_logic_vector(3 DOWNTO 0)
+            );
+end component;
+
+component mux8_1 port(i : in  STD_LOGIC_VECTOR (7 downto 0);
+                    MS : in  STD_LOGIC_VECTOR (2 downto 0);
+                    z : out  std_logic    
+                );
+end component;
+
+component extend port(in_extend : in  STD_LOGIC_VECTOR (9 downto 0);
+                      out_extend : out  STD_LOGIC_VECTOR (31 downto 0)
+                );
+end component;
+
+component pc port(clk : in  STD_LOGIC;
+                reset : in  STD_LOGIC;
+                
+                PL : in  STD_LOGIC;
+                PI : in  STD_LOGIC;
+                pc_in : in  STD_LOGIC_VECTOR (31 downto 0);
+                pc_out : out  STD_LOGIC_VECTOR (31 downto 0)
+                );
+end component;
+
+
+SIGNAL PL_out, PI_out : std_logic;
+SIGNAL IL_out: std_logic;
+SIGNAL MC_out : std_logic;
+SIGNAL MS_out : std_logic_vector(2 DOWNTO 0);
+SIGNAL NA_out : std_logic_vector(16 DOWNTO 0);
+
+SIGNAL MUXS_OUT : std_logic;
+SIGNAL notC : std_logic;
+SIGNAL notZ : std_logic;
+SIGNAL DR_PC : std_logic_vector(4 DOWNTO 0);
+SIGNAL SA_PC : std_logic_vector(4 DOWNTO 0);
+SIGNAL SB_PC : std_logic_vector(4 DOWNTO 0);
+SIGNAL IN_CAR : std_logic_vector(16 DOWNTO 0);
+SIGNAL MUXC_OUT : std_logic_vector(16 DOWNTO 0);
+SIGNAL Opcode : std_logic_vector(16 DOWNTO 0);
+SIGNAL PCin : std_logic_vector(31 DOWNTO 0);
+
+signal flagVector:std_logic_vector(3 DOWNTO 0);
+SIGNAL RC_flag : std_logic;
+SIGNAL RV_flag : std_logic;
+SIGNAL RN_flag : std_logic;
+SIGNAL RZ_flag : std_logic;
+SIGNAL FL_flag : std_logic;
+
+begin
+
+--  PL <= PL_out;
+--    PI <= PI_out;
+--    IL <= IL_out;
+--    MC <= MC_out;
+--    MS <= MS_out;
+--    NA <= NA_out;
+--    DR <= DR_PC;
+--    SA <= SA_PC;
+--    SB <= SB_PC; 
+
+control_mem0: control_memory port map(
+                             FL =>  FL,
+                             RZ =>  RZ,
+                             RN =>  RN,
+                             RC =>  RC,
+                             RV =>  RV,
+                             MW =>  MW,
+                             MM =>  MM,
+                             RW =>  RW,
+                             MD =>  MD,
+                             FS =>  FS,
+                             MB =>  MB,
+                             TB =>  TB,
+                             TA =>  TA,
+                             TD =>  TD,
+                             PL =>  PL_out,
+                             PI =>  PI_out,
+                             IL =>  IL_out,
+                             MC =>  MC_out,
+                             MS =>  MS_out,
+                             NA =>  NA_out,
+                             IN_CAR=>IN_CAR 
+);
+
+CAR0: CAR port map(
+        -- reset=>reset,
+         clk=>clk,
+         in1   =>MUXS_out  ,
+         in17  =>MUXC_out ,
+         out17 =>IN_CAR
+);
+
+
+MUX_C0: mux2_17 port map(
+          MC =>MC_out ,
+          in0 =>NA_out ,
+          in1 =>Opcode ,
+          z  =>MUXC_out
+);
+
+
+
+
+IR0: instructionReg port map(
+         clk=>clk       ,
+         IL    =>IL_out    ,
+         IR_in =>instruction ,
+         opcode=>Opcode,
+         DR    =>DR_PC    ,
+         SA    =>SA_PC    ,
+         SB    =>SB_PC 
+);
+
+flag0: flag port map(clk=>clk, 
+                    Vflag=>Vflag,
+                    Cflag=>Cflag,
+                    Nflag=>Nflag,
+                    Zflag=>Zflag,                  
+                    RV =>RV_flag,
+                    RC =>RC_flag,
+                    RN =>RN_flag,
+                    RZ =>RZ_flag,
+                    FL =>FL_flag,
+                    
+                    flagVector=>flagVector
+);
+
+
+MUX_S0: mux8_1 port map(
+              i(0) =>'0',
+              i(1) =>'1',
+              i(5 downto 2) =>flagVector,
+              i(6) =>notC,
+              i(7) =>notZ,
+              MS  =>MS_out ,
+              z   =>MUXS_out 
+
+);
+
+PC0: pc port map(
+         clk=>clk,
+         reset=>reset,
+         
+         PL     =>PL_out    ,
+         PI     =>PI_out    ,
+         pc_in  =>PCin ,
+         pc_out =>PCout
+);
+
+extend0: extend port map(
+          in_extend(4 downto 0)  =>SB_PC ,
+          in_extend(9 downto 5)  =>DR_PC ,
+          out_extend =>PCin
+);
+
+    PL <= PL_out;
+    PI <= PI_out;
+    IL <= IL_out;
+    MC <= MC_out;
+    MS <= MS_out;
+    NA <= NA_out;
+    DR <= DR_PC;
+    SA <= SA_PC;
+    SB <= SB_PC; 
+    
+    RC<=RC_flag;
+    RV<=RV_flag;
+    RN<=RN_flag;
+    RZ<=RZ_flag;
+    FL<=FL_flag;
+    
+    
+    
+    
+
+end Behavioral;

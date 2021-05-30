@@ -1,0 +1,124 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 20.12.2020 23:16:05
+-- Design Name: 
+-- Module Name: memory_tb - testbench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity memory_tb is
+--  Port ( );
+end memory_tb;
+
+architecture testbench of memory_tb is
+
+component memory
+Port(clk: in std_logic;
+     address : in std_logic_vector(31 downto 0);
+     data_in : in  std_logic_vector(31 downto 0);
+     MW: in std_logic;
+     data_out: out std_logic_vector(31 downto 0)
+    );
+end component;
+    
+signal address : std_logic_vector(31 downto 0);
+signal data_in : std_logic_vector(31 downto 0);
+signal MW: std_logic;
+signal data_out: std_logic_vector(31 downto 0);
+signal clk: std_logic;
+
+constant clock: Time:=10 ns;
+
+begin
+ uut: memory port map(clk=>clk,
+                     address=>address,
+                     data_in=>data_in,
+                     MW=>MW,
+                     data_out=>data_out
+                    );
+ 
+stimulus:process
+begin                                    
+
+--write to address 0x00000000: dataIn
+MW<='1';
+clk<='1';
+data_in<=X"aaaaaaaa";
+address<=X"00000000";
+
+wait for clock;
+clk<='0';
+
+--write to address 0x00000001: dataIn
+clk<='1';
+data_in<=X"bbbbbbbb";
+address<=X"00000001";
+
+wait for clock;
+clk<='0';
+
+--write to address 0x00000002: dataIn
+clk<='1';
+data_in<=X"cccccccc";
+address<=X"00000002";
+
+wait for clock;
+clk<='0';
+
+--read value from the address 0x00000000: 0xaaaaaaaa
+wait for clock;
+clk<='1';
+MW<='0';
+data_in<=X"00000000";
+address<=X"00000000";
+
+wait for clock;
+clk<='1';
+
+--read value from the address 0x00000001: 0xbbbbbbbb
+address<=X"00000001";
+
+wait for clock;
+
+--read value from the address 0x00000002: 0xcccccccc
+address<=X"00000002";
+
+wait for clock;
+
+--read value from the address 0x00000003: X"00039084"
+address<=X"00000003";
+
+wait for clock;
+
+--read value from the address 0x00000004: X"0000142A"
+address<=X"00000004";
+wait;
+
+end process;
+
+end testbench;

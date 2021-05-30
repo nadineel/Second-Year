@@ -1,0 +1,81 @@
+//PS. I have struggled trying to build the processor and from the testbech I have generated,
+it seems to continue to do cycles to just one instruction(the first one) instead of moving on to the next.
+all entities i have made work with each other up until the processor.
+
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 29.12.2020 13:36:38
+-- Design Name: 
+-- Module Name: proc_tb - testbench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity proc_tb is
+--  Port ( );
+end proc_tb;
+
+architecture testbench of proc_tb is
+
+component proc is Port ( clk:in std_logic;
+          reset: in std_logic);
+end component;
+
+signal clk : std_logic;
+signal reset : std_logic;
+
+    CONSTANT clock : time:= 60ns;
+    CONSTANT cycles : INTEGER := 0;
+    CONSTANT max_cycles : INTEGER := 1000;
+
+begin
+
+uut: proc port map(
+        clk=>clk,
+        reset=>reset
+);
+
+
+process
+begin
+   reset <= '1';
+   clk <= '1';
+   WAIT FOR clock;
+   reset <= '0';
+   clk <= '0';
+
+        while cycles < max_cycles loop
+            clk <= NOT clk;
+            WAIT FOR clock/2;
+        end loop;
+        
+wait for clock;
+
+wait;
+end process;
+
+end testbench;

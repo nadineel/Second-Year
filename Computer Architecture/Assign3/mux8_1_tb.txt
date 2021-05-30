@@ -1,0 +1,116 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 23.12.2020 17:44:07
+-- Design Name: 
+-- Module Name: mux8_1_tb - testbench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity mux8_1_tb is
+--  Port ( );
+end mux8_1_tb;
+
+architecture testbench of mux8_1_tb is
+
+component mux8_1
+
+  Port (i : in  STD_LOGIC_VECTOR (7 downto 0);
+        MS : in  STD_LOGIC_VECTOR (2 downto 0);
+        z : out  STD_LOGIC);
+
+end component;
+
+signal  i:  STD_LOGIC_VECTOR (7 downto 0);
+signal  MS :STD_LOGIC_VECTOR (2 downto 0);
+signal  z : STD_LOGIC;
+
+begin
+
+    uut: mux8_1 PORT MAP (
+              i =>i,
+              MS  =>MS ,
+              z   =>z );
+   
+   stimulus: process
+   begin 
+    i(0)<='1';
+    i(1)<='0';
+    i(2)<='1';
+    i(3)<='0';
+    i(4)<='1';
+    i(5)<='0';
+    i(6)<='1';
+    i(7)<='0';
+
+--testbench will output z as 10101010--
+    
+    wait for 5ns;
+    MS(0)<='0';
+    MS(1)<='0';
+    MS(2)<='0';
+    
+    wait for 5ns;
+    MS(0)<='0';
+    MS(1)<='0';
+    MS(2)<='1';
+    
+    wait for 5ns;
+    MS(0)<='0';
+    MS(1)<='1';
+    MS(2)<='0';
+    
+    wait for 5ns;
+    MS(0)<='0';
+    MS(1)<='1';
+    MS(2)<='1';
+    
+    wait for 5ns;
+    MS(0)<='1';
+    MS(1)<='0';
+    MS(2)<='0';
+    
+    wait for 5ns;
+    MS(0)<='1';
+    MS(1)<='0';
+    MS(2)<='1';
+    
+    wait for 5ns;
+    MS(0)<='1';
+    MS(1)<='1';
+    MS(2)<='0';
+    
+    wait for 5ns;
+    MS(0)<='1';
+    MS(1)<='1';
+    MS(2)<='1';
+   
+   wait for 5ns;
+    wait;
+    end process;      
+
+end testbench;

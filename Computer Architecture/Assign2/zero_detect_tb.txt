@@ -1,0 +1,72 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 15.11.2020 21:42:16
+-- Design Name: 
+-- Module Name: zero_detect_tb - testBench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity zero_detect_tb is
+--  Port ( );
+end zero_detect_tb;
+
+architecture testBench of zero_detect_tb is
+
+component zero_detect
+  	port(
+  		G : in std_logic_vector (31 downto 0);
+  		Z : out std_logic);
+  end component;
+
+  signal G: std_logic_vector (31 downto 0);
+  signal Z: std_logic;
+  
+     
+begin
+
+  uut: zero_detect port map ( G => G,
+                              Z => Z );
+
+  stimulus: process
+  begin
+  
+    G <= x"FFFFFFFF";
+    
+    wait for 5 ns;    
+     
+    G <= x"00000000";
+    
+    wait for 5 ns;
+       
+    G <= x"00000a0a";
+    
+   wait for 5 ns;
+  end process;
+
+
+end testBench;

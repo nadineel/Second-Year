@@ -1,0 +1,58 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 09.11.2020 12:50:53
+-- Design Name: 
+-- Module Name: full_adder - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity full_adder is
+  Port (A_bit : in  STD_LOGIC;
+        B_bit : in  STD_LOGIC;
+        c_in : in  STD_LOGIC;
+        c_out : out  STD_LOGIC;
+        G_bit : out  STD_LOGIC
+          );
+end full_adder;
+
+architecture Behavioral of full_adder is
+
+signal s1: STD_LOGIC;
+signal s2: STD_LOGIC;
+signal s3: STD_LOGIC;
+
+begin
+
+s1 <= (A_bit xor B_bit) after 1 ns;
+s2 <= (c_in and s1) after 1 ns;
+s3 <= (A_bit and B_bit) after 1 ns;
+G_bit <= (s1 xor c_in) after 1 ns;
+c_out <= (s2 or s3) after 1 ns;
+
+
+end Behavioral;

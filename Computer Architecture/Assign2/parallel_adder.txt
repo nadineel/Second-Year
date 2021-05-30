@@ -1,0 +1,99 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 09.11.2020 13:13:41
+-- Design Name: 
+-- Module Name: parallel_adder32 - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity parallel_adder32 is
+    Port (X : in  STD_LOGIC_VECTOR (31 downto 0); 
+          Y : in  STD_LOGIC_VECTOR (31 downto 0);
+          c_in : in  STD_LOGIC;  
+          c_out : out  STD_LOGIC;
+          G : out  STD_LOGIC_VECTOR (31 downto 0);
+          V : out  STD_LOGIC 
+            );                   
+end parallel_adder32;
+
+architecture Behavioral of parallel_adder32 is
+
+--component full_adder         
+   COMPONENT full_adder        
+   Port (A_bit : in  STD_LOGIC;  
+      B_bit : in  STD_LOGIC;  
+      c_in : in  STD_LOGIC;   
+      c_out : out  STD_LOGIC; 
+      G_bit : out  STD_LOGIC  
+        );                     
+   END COMPONENT;  
+   
+signal c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15 : std_logic;
+signal c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31 : std_logic;
+
+begin
+	adder0: full_adder port map(A_bit => X(0),B_bit => Y(0),c_in => c_in,G_bit => G(0),c_out => c0);
+	adder1: full_adder port map(A_bit => X(1),B_bit => Y(1),c_in => c0,G_bit => G(1),c_out => c1);
+	adder2: full_adder port map(A_bit => X(2),B_bit => Y(2),c_in => c1,G_bit => G(2),c_out => c2);
+	adder3: full_adder port map(A_bit => X(3),B_bit => Y(3),c_in => c2,G_bit => G(3),c_out => c3);
+	adder4: full_adder port map(A_bit => X(4),B_bit => Y(4),c_in => c3,G_bit => G(4),c_out => c4);
+	adder5: full_adder port map(A_bit => X(5),B_bit => Y(5),c_in => c4,G_bit => G(5),c_out => c5);
+	adder6: full_adder port map(A_bit => X(6),B_bit => Y(6),c_in => c5,G_bit => G(6),c_out => c6);
+	adder7: full_adder port map(A_bit => X(7),B_bit => Y(7),c_in => c6,G_bit => G(7),c_out => c7);
+	adder8: full_adder port map(A_bit => X(8),B_bit => Y(8),c_in => c7,G_bit => G(8),c_out => c8);
+	adder9: full_adder port map(A_bit => X(9),B_bit => Y(9),c_in => c8,G_bit => G(9),c_out => c9);
+	adder10: full_adder port map(A_bit => X(10),B_bit => Y(10),c_in => c9,G_bit => G(10),c_out => c10);
+	adder11: full_adder port map(A_bit => X(11),B_bit => Y(11),c_in => c10,G_bit => G(11),c_out => c11);
+	adder12: full_adder port map(A_bit => X(12),B_bit => Y(12),c_in => c11,G_bit => G(12),c_out => c12);
+	adder13: full_adder port map(A_bit => X(13),B_bit => Y(13),c_in => c12,G_bit => G(13),c_out => c13);
+	adder14: full_adder port map(A_bit => X(14),B_bit => Y(14),c_in => c13,G_bit => G(14),c_out => c14);
+	adder15: full_adder port map(A_bit => X(15),B_bit => Y(15),c_in => c14,G_bit => G(15),c_out => c15);
+	
+	adder16: full_adder port map(A_bit => X(16),B_bit => Y(16),c_in => c15,G_bit => G(16),c_out => c16);
+	adder17: full_adder port map(A_bit => X(17),B_bit => Y(17),c_in => c16,G_bit => G(17),c_out => c17);
+	adder18: full_adder port map(A_bit => X(18),B_bit => Y(18),c_in => c17,G_bit => G(18),c_out => c18);
+	adder19: full_adder port map(A_bit => X(19),B_bit => Y(19),c_in => c18,G_bit => G(19),c_out => c19);
+	
+	adder20: full_adder port map(A_bit => X(20),B_bit => Y(20),c_in => c19,G_bit => G(20),c_out => c20);
+	adder21: full_adder port map(A_bit => X(21),B_bit => Y(21),c_in => c20,G_bit => G(21),c_out => c21);
+	adder22: full_adder port map(A_bit => X(22),B_bit => Y(22),c_in => c21,G_bit => G(22),c_out => c22);
+	adder23: full_adder port map(A_bit => X(23),B_bit => Y(23),c_in => c22,G_bit => G(23),c_out => c23);
+	adder24: full_adder port map(A_bit => X(24),B_bit => Y(24),c_in => c23,G_bit => G(24),c_out => c24);
+	adder25: full_adder port map(A_bit => X(25),B_bit => Y(25),c_in => c24,G_bit => G(25),c_out => c25);
+	adder26: full_adder port map(A_bit => X(26),B_bit => Y(26),c_in => c25,G_bit => G(26),c_out => c26);
+	adder27: full_adder port map(A_bit => X(27),B_bit => Y(27),c_in => c26,G_bit => G(27),c_out => c27);
+	adder28: full_adder port map(A_bit => X(28),B_bit => Y(28),c_in => c27,G_bit => G(28),c_out => c28);
+	adder29: full_adder port map(A_bit => X(29),B_bit => Y(29),c_in => c28,G_bit => G(29),c_out => c29);
+	adder30: full_adder port map(A_bit => X(30),B_bit => Y(30),c_in => c29,G_bit => G(30),c_out => c30);
+	adder31: full_adder port map(A_bit => X(31),B_bit => Y(31),c_in => c30,G_bit => G(31),c_out => c31);
+	            
+    
+    c_out <= c31;
+    V <= c30 xor c31;
+
+end Behavioral;

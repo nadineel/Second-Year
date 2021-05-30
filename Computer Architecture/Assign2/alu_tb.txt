@@ -1,0 +1,170 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 15.11.2020 18:40:43
+-- Design Name: 
+-- Module Name: ALU_tb - testBench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity ALU_tb is
+--  Port ( );
+end ALU_tb;
+
+architecture testBench of ALU_tb is
+
+ component ALU
+      Port (  A : in  STD_LOGIC_VECTOR (31 downto 0);        
+        B : in  STD_LOGIC_VECTOR (31 downto 0);
+        c_in: in STD_LOGIC;
+        S : in  STD_LOGIC_VECTOR (2 downto 0);
+        c_out: out STD_LOGIC;
+        V: out STD_LOGIC;
+        G : out  STD_LOGIC_VECTOR (31 downto 0)
+  );
+  end component;
+
+  signal A: std_logic_vector (31 downto 0);
+  signal B: std_logic_vector (31 downto 0);
+  signal S: STD_LOGIC_VECTOR (2 downto 0);
+  
+  signal c_in: std_logic;
+  signal c_out: std_logic;
+  signal G: std_logic_vector (31 downto 0);
+  signal V: std_logic;
+
+
+begin
+
+  uut: ALU port map(A => A,
+                    B => B,
+                    S     => S,   
+                    c_in  => c_in,
+                    c_out => c_out,
+                    G     => G,
+                    V     => V );
+
+  stimulus: process
+  begin
+ 
+    B <= x"55555555";
+    A <= x"aaaaaaaa";
+    
+    
+   S(2) <= '0';
+    S(1) <= '0';
+    S(0) <= '0';
+    c_in <= '0';
+    wait for 50 ns;
+    -- output = A = 0xAAAA
+    -- c_out = 0
+    
+    S(2) <= '0';
+    S(1) <= '0';
+    S(0) <= '0';
+    c_in <= '1';
+    wait for 50 ns;
+    -- output = A+1 = 0xAAAB
+    -- c_out = 0
+    
+    S(2) <= '0';
+    S(1) <= '0';
+    S(0) <= '1';
+    c_in <= '0';
+    wait for 50 ns;
+    -- output = A+B = 0xFFFF
+    -- c_out = 0
+
+    S(2) <= '0';
+    S(1) <= '0';
+    S(0) <= '1';
+    c_in <= '1';
+    wait for 50 ns;
+    -- output = A+B+1 = 0xFFFF
+    -- c_out = 1
+    
+    S(2) <= '0';
+    S(1) <= '1';
+    S(0) <= '0';
+    c_in <= '0';
+    wait for 50 ns;
+    -- output = A+not(B) = 0x5554
+    -- c_out = 1
+    
+    S(2) <= '0';
+    S(1) <= '1';
+    S(0) <= '0';
+    c_in <= '1';
+    wait for 50 ns;
+    -- output = A+not(B)+1 = 0x5555
+    -- c_out = 1
+    
+    S(2) <= '0';
+    S(1) <= '1';
+    S(0) <= '1';
+    c_in <= '0';
+    wait for 50 ns;
+    -- output = A+0xFFFF = 0xAAA9
+    -- c_out = 1
+    
+    S(2) <= '0';
+    S(1) <= '1';
+    S(0) <= '1';
+    c_in <= '1';
+    wait for 50 ns;
+    -- output = A+0xFFFF+1 = 0xAAAA
+    -- c_out = 1
+    
+    S(2) <= '1';
+    S(1) <= '0';
+    S(0) <= '0';
+    wait for 50 ns;
+    -- output = A AND B = 0x0000
+    
+    S(2) <= '1';
+    S(1) <= '0';
+    S(0) <= '1';
+    wait for 50 ns;
+    -- output = A OR B = 0xFFFF
+    
+    S(2) <= '1';
+    S(1) <= '1';
+    S(0) <= '0';
+    wait for 50 ns;
+    -- output = A XOR B = 0xFFFF
+    
+    S(2) <= '1';
+    S(1) <= '1';
+    S(0) <= '1';
+    wait for 50 ns;
+    -- output = NOT A = 0x5555
+
+    wait;
+  end process;
+
+
+end testBench;

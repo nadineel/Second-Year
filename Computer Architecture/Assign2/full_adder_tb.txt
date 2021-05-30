@@ -1,0 +1,97 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 15.11.2020 12:57:41
+-- Design Name: 
+-- Module Name: full_adder_tb - testBench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity full_adder_tb is
+--  Port ( );
+end full_adder_tb;
+
+architecture testBench of full_adder_tb is
+
+component full_adder
+      port ( 
+  		  A_bit : in std_logic;
+          B_bit : in std_logic;
+          c_in : in std_logic;
+          G_bit : out std_logic;
+          c_out : out std_logic);
+  end component;
+
+  signal A_bit: std_logic;
+  signal B_bit: std_logic;
+  signal c_in: std_logic;
+  signal G_bit: std_logic;
+  signal c_out: std_logic;
+
+begin
+    uut: full_adder port map ( A_bit => A_bit,
+                             B_bit=> B_bit,
+                             c_in  => c_in,
+                             G_bit => G_bit,
+                             c_out => c_out );
+
+  stimulus: process
+  begin
+  
+    A_bit <= '0';
+    B_bit <= '0';
+    c_in <= '0';
+    wait for 5 ns;
+    
+    A_bit <= '1';
+    wait for 5 ns;
+    
+    A_bit <= '0';
+    B_bit <= '1';
+    wait for 5 ns;
+    
+    A_bit <= '1';
+    wait for 5 ns;
+    
+    A_bit <= '0';
+    B_bit <= '0';
+    c_in <= '1';
+    wait for 5 ns;
+    
+    B_bit <= '1';
+    wait for 5 ns;
+    
+    A_bit <= '1';
+    B_bit <= '0';
+    wait for 5 ns;
+    
+    B_bit <= '1';
+    wait for 5ns;
+
+  end process;
+
+end testBench;

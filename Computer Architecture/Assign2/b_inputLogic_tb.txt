@@ -1,0 +1,91 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 15.11.2020 21:40:10
+-- Design Name: 
+-- Module Name: B_input_logic_tb - testBench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity B_input_logic_tb is
+--  Port ( );
+end B_input_logic_tb;
+
+architecture testBench of B_input_logic_tb is
+
+component b_inputLogic
+      port (
+  		s0 : in std_logic;
+  		s1 : in std_logic;
+  		B : in std_logic_vector (31 downto 0);
+  		Y : out std_logic_vector (31 downto 0));
+  end component;
+
+  signal s0: std_logic;
+  signal s1: std_logic;
+  signal B: std_logic_vector (31 downto 0);
+  signal Y: std_logic_vector (31 downto 0);
+
+
+begin
+
+  uut: b_inputLogic port map ( s0 => s0,
+                                s1 => s1,
+                                B  => B,
+                                Y  => Y );
+
+  stimulus: process
+  begin
+  
+    B <= x"aaaaaaaa";
+    -- this is the first test signal
+    
+    wait for 10 ns;
+    s0 <= '0';
+    s1 <= '0';
+    -- Y = all 0s
+    
+    wait for 10 ns;
+    s0 <= '0';
+    s1 <= '1';
+    -- Y = B 
+    
+    wait for 10 ns;
+    s0 <= '1';
+    s1 <= '0';
+    -- Y = !B 
+    
+    wait for 10 ns;
+    s0 <= '1';
+    s1 <= '1';
+    -- Y = all 1s
+
+    wait for 10 ns;
+  end process;
+
+
+end testBench;

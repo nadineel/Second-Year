@@ -1,0 +1,76 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: Bernadine Lao
+-- 
+-- Create Date: 24.10.2020 12:46:12
+-- Design Name: 
+-- Module Name: decoder_5_to_32 - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity decoder_5_to_32 is
+ Port ( A: in std_logic_vector (4 downto 0); 
+        D: out std_logic_vector (31 downto 0));
+        
+end decoder_5_to_32;
+
+architecture Behavioral of decoder_5_to_32 is
+
+begin
+    D(0) <='1' when (A="00000") else '0';
+    D(1) <='1' when (A="00001") else '0';
+    D(2) <='1' when (A="00010") else '0';
+    D(3) <='1' when (A="00011") else '0';
+    D(4) <='1' when (A="00100") else '0';
+    D(5) <='1' when (A="00101") else '0';
+    D(6) <='1' when (A="00110") else '0';
+    D(7) <='1' when (A="00111") else '0';
+    D(8) <='1' when (A="01000") else '0';
+    D(9) <='1' when (A="01001") else '0';
+    D(10) <='1' when (A="01010") else '0';
+    D(11) <='1' when (A="01011") else '0';
+    D(12) <='1' when (A="01100") else '0';
+    D(13) <='1' when (A="01101") else '0';
+    D(14) <='1' when (A="01110") else '0';
+    D(15) <='1' when (A="01111") else '0';
+    D(16) <='1' when (A="10000") else '0';
+    D(17) <='1' when (A="10001") else '0';
+    D(18) <='1' when (A="10010") else '0';
+    D(19) <='1' when (A="10011") else '0';
+    D(20) <='1' when (A="10100") else '0';
+    D(21) <='1' when (A="10101") else '0';
+    D(22) <='1' when (A="10110") else '0';
+    D(23) <='1' when (A="10111") else '0';
+    D(24) <='1' when (A="11000") else '0';
+    D(25) <='1' when (A="11001") else '0';
+    D(26) <='1' when (A="11010") else '0';
+    D(27) <='1' when (A="11011") else '0';
+    D(28) <='1' when (A="11100") else '0';
+    D(29) <='1' when (A="11101") else '0';
+    D(30) <='1' when (A="11110") else '0';
+    D(31) <='1' when (A="11111") else '0';
+    
+end Behavioral;

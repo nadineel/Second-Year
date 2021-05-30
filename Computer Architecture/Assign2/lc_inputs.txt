@@ -1,0 +1,67 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 11.11.2020 11:28:44
+-- Design Name: 
+-- Module Name: lc_inputs - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity lc_inputs is
+  Port (A : in  STD_LOGIC;
+        B : in  STD_LOGIC;
+        S : in  STD_LOGIC_VECTOR (1 downto 0);
+        G : out  STD_LOGIC
+   );
+end lc_inputs;
+
+architecture Behavioral of lc_inputs is
+
+    COMPONENT mux4_32
+    Port (in_bit : in  STD_LOGIC_VECTOR (3 downto 0);
+               S : in  STD_LOGIC_VECTOR (1 downto 0);
+               G : out  STD_LOGIC
+   );   
+    END COMPONENT;
+    
+    signal in0,in1,in2,in3: std_logic;
+begin
+    in0<= A and B; 
+    in1<= A or B; 
+    in2<= A xor B;
+    in3<= not A;
+    
+    mux: mux4_32 port map(
+         in_bit(0) =>in0,
+         in_bit(1) =>in1,
+         in_bit(2) =>in2,
+         in_bit(3) =>in3,
+         S =>S,
+         G=>G
+         );
+         
+end Behavioral;

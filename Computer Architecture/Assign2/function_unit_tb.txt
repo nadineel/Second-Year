@@ -1,0 +1,147 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 16.11.2020 01:26:39
+-- Design Name: 
+-- Module Name: function_unit_tb - testBench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity function_unit_tb is
+--  Port ( );
+end function_unit_tb;
+
+architecture testBench of function_unit_tb is
+
+ component function_unit
+      port ( 
+  		A : in  STD_LOGIC_VECTOR (31 downto 0);        
+        B : in  STD_LOGIC_VECTOR (31 downto 0);
+        FS: in  STD_LOGIC_VECTOR (4 downto 0);      
+        N: out STD_LOGIC;
+        Z: out STD_LOGIC;
+        C: out STD_LOGIC;
+        V: out STD_LOGIC;
+        F : out  STD_LOGIC_VECTOR (31 downto 0));
+  end component;
+
+  signal A: std_logic_vector (31 downto 0);
+  signal B: std_logic_vector (31 downto 0);
+  signal FS: std_logic_vector (4 downto 0);
+  signal V: std_logic;
+  signal C: std_logic;
+  signal N: std_logic;
+  signal Z: std_logic;
+  signal F: std_logic_vector (31 downto 0);
+
+    
+
+begin
+
+  uut: function_unit port map ( A  => A,
+                                B  => B,
+                                FS => FS,
+                                V  => V,
+                                C  => C,
+                                N  => N,
+                                Z  => Z,
+                                F  => F );
+
+  stimulus: process
+  begin
+  
+    A <= x"aaaaaaaa"; --because its .....1010101
+    B <= x"11111111"; --because its .....0101010
+       
+    FS <= "00000";
+    wait for 100 ns;
+    -- F =A =0xAAAAAAAA
+    
+    FS <= "00001";
+    wait for 100 ns;
+    -- F=A+1 =0xAAAAAAAB
+    
+    
+    FS <= "00010";
+    wait for 100 ns;
+    -- F=A+B =0xFFFFFFFF
+    
+    
+    FS <= "00100";
+    wait for 100 ns;
+    -- F=A+(not)B =0x55555554
+    
+    
+    FS <= "00101";
+    wait for 100 ns;
+    -- F=A+(not)B+1 =0x55555555
+    
+    
+    FS <= "00110";
+    wait for 100 ns;
+    -- F=A+0xFFFF =0xAAAAAAA9
+    
+    
+    FS <= "00111";
+    wait for 100 ns;
+    -- F=A =0xAAAAAAAA
+    
+    FS <= "01000";
+    wait for 100 ns;
+    -- F=A AND B =0x00000000
+    
+    
+    FS <= "01010";
+    wait for 100 ns;
+    -- F=A OR B=0xFFFFFFFF
+    
+    
+    FS <= "01100";
+    wait for 100 ns;
+    -- F=A XOR B=0xFFFFFFFF
+    
+    
+    FS <= "01110";
+    wait for 100 ns;
+    -- F=(not)A= 0x55555555
+    
+    FS <= "10000";
+    wait for 100 ns;
+    -- F=B;
+    
+    FS <= "10100";
+    wait for 100 ns;
+    -- F=B>>1;      ;0x08888888
+    
+    FS <= "11000";
+    wait for 100 ns;
+    -- F=B<<1;      ;0x22222222
+  
+  end process;
+
+
+end testBench;

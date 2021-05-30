@@ -1,0 +1,88 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 11.11.2020 11:09:37
+-- Design Name: 
+-- Module Name: logic_circuit - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity logic_circuit is
+  Port ( A : in  STD_LOGIC_VECTOR (31 downto 0);
+        B : in  STD_LOGIC_VECTOR (31 downto 0);
+        S : in  STD_LOGIC_VECTOR (1 downto 0);
+        G : out  STD_LOGIC_VECTOR (31 downto 0)
+  );
+end logic_circuit;
+
+architecture Behavioral of logic_circuit is
+    
+    COMPONENT lc_inputs
+    Port (A : in  STD_LOGIC;
+        B : in  STD_LOGIC;
+        S : in  STD_LOGIC_VECTOR (1 downto 0);
+        G : out  STD_LOGIC
+   );
+    END COMPONENT;
+begin
+
+input0: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(0), B => B(0), G => G(0));
+input1: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(1), B => B(1), G => G(1));
+input2: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(2), B => B(2), G => G(2));
+input3: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(3), B => B(3), G => G(3));
+input4: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(4), B => B(4), G => G(4));
+input5: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(5), B => B(5), G => G(5));
+input6: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(6), B => B(6), G => G(6));
+input7: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(7), B => B(7), G => G(7));
+input8: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(8), B => B(8), G => G(8));
+input9: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(9), B => B(9), G => G(9));
+input10: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(10), B => B(10), G => G(10));
+input11: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(11), B => B(11), G => G(11));
+input12: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(12), B => B(12), G => G(12));
+input13: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(13), B => B(13), G => G(13));
+input14: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(14), B => B(14), G => G(14));
+input15: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(15), B => B(15), G => G(15));
+
+input16: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(16), B => B(16), G => G(16));
+input17: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(17), B => B(17), G => G(17));
+input18: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(18), B => B(18), G => G(18));
+input19: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(19), B => B(19), G => G(19));
+
+input20: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(20), B => B(20), G => G(20));
+input21: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(21), B => B(21), G => G(21));
+input22: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(22), B => B(22), G => G(22));
+input23: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(23), B => B(23), G => G(23));
+input24: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(24), B => B(24), G => G(24));
+input25: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(25), B => B(25), G => G(25));
+input26: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(26), B => B(26), G => G(26));
+input27: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(27), B => B(27), G => G(27));
+input28: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(28), B => B(28), G => G(28));
+input29: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(29), B => B(29), G => G(29));
+input30: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(30), B => B(30), G => G(30));
+input31: lc_inputs port map(S(0) => S(0), S(1) => S(1), A => A(31), B => B(31), G => G(31));
+
+end Behavioral;

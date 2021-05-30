@@ -1,0 +1,538 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 16.11.2020 01:26:39
+-- Design Name: 
+-- Module Name: datapath_tb - testBench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity datapath_tb is
+--  Port ( );
+end datapath_tb;
+
+architecture testBench of datapath_tb is
+
+component dataPath
+      port ( 
+        clk : in std_logic;
+        write: in std_logic;
+        constant_in : in  STD_LOGIC_VECTOR (31 downto 0);
+        MB_select: in STD_LOGIC;
+        MD_select: in STD_LOGIC;
+        data_in : in  STD_LOGIC_VECTOR (31 downto 0);
+        D_address : in std_logic_vector(4 downto 0);
+        A_address : in std_logic_vector(4 downto 0);
+        B_address : in std_logic_vector(4 downto 0);       
+        FS: in  STD_LOGIC_VECTOR (4 downto 0);
+        
+        
+        address_out : out  STD_LOGIC_VECTOR (31 downto 0);
+        data_out : out  STD_LOGIC_VECTOR (31 downto 0);
+        V : out STD_LOGIC;
+        C : out STD_LOGIC;
+        N : out STD_LOGIC;
+        Z : out STD_LOGIC  );
+  end component;
+
+--signals
+signal clk :  std_logic;
+signal write:  std_logic;
+signal constant_in :   STD_LOGIC_VECTOR (31 downto 0);
+signal MB_select:  STD_LOGIC;
+signal MD_select:  STD_LOGIC;
+signal data_in :   STD_LOGIC_VECTOR (31 downto 0);
+signal D_address :  std_logic_vector(4 downto 0);
+signal A_address :  std_logic_vector(4 downto 0);
+signal B_address :  std_logic_vector(4 downto 0);       
+signal FS:   STD_LOGIC_VECTOR (4 downto 0);
+
+
+signal address_out :   STD_LOGIC_VECTOR (31 downto 0);
+signal data_out :   STD_LOGIC_VECTOR (31 downto 0);
+signal V :  STD_LOGIC;
+signal C :  STD_LOGIC;
+signal N :  STD_LOGIC;
+signal Z :  STD_LOGIC;
+
+begin
+
+ uut: dataPath port map(clk => clk,
+                        write=>write,
+                        constant_in =>constant_in,
+                        MB_select=>MB_select,
+                        MD_select=> MD_select,
+                        data_in => data_in ,
+                        D_address => D_address,
+                        A_address => A_address,
+                        B_address => B_address,
+                        FS =>    FS,                                                        
+                        address_out =>address_out,
+                        data_out =>data_out,
+                        V =>V,
+                        C =>C,
+                        N =>N,
+                        Z =>Z
+        );
+        
+  stimulus: process
+  
+  begin
+ 
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- write 0x00000000 to register 0 and show it on data_out
+    write <= '1';
+    MD_select <= '1';
+    D_address <= "00000";
+    data_in <= x"00000000";
+    MB_select <= '0';
+    B_address <= "00000";
+    A_address <= "00000";
+ ----------------------------------------------------------------------------------   
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- write 0xaaaaaaaa value to register 1 and show it on data_out
+    D_address <= "00001";
+    data_in <= x"aaaaaaaa";
+    MB_select <= '0';
+    B_address <= "00001";
+    A_address <= "00001";
+-------------------------------------------------------------------    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- transfer the value in R0 into R2; r2=0x00000000 z=1
+    D_address <= "00010";
+    A_address <= "00000";
+    MD_select <= '0';
+    FS <= "00000"; --F=A
+   
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- show operation from function unit done in register entered in B_address R2
+    write <= '0';
+    MB_select <= '0';
+    B_address <= "00010";
+ ----------------------------------------------------------------------------   
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- increment R0 into R3; r3=0x00000001
+    D_address <= "00011";
+    A_address <= "00000";
+    write <= '1';
+    FS <= "00001";   --F=A+1
+    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- show the operation from function unit done in register entered in B_address R3
+    write <= '0';
+    MB_select <= '0';
+    B_address <= "00011";
+ 
+ ---------------------------------------------------------------------------    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- R4=R0+R1 ;r4=0xaaaaaaaa N=1;
+    D_address <= "00100";
+    A_address <= "00000";
+    B_address <= "00001";
+    write <= '1';
+    FS <= "00010";   --F=A+B
+    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- show the operation from function unit done in register entered in B_address R4
+    write <= '0';
+    MB_select <= '0';
+    B_address <= "00100";
+------------------------------------------------------------------------------------------------------
+      -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- R5=R0+R1+1; r5=0xaaaaaaab N=1;
+    D_address <= "00101";
+    A_address <= "00000";
+    B_address <= "00001";
+    write <= '1';
+    FS <= "00011";   --F=A+B+1
+    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- show the operation from function unit done in register entered in B_address R5
+    write <= '0';
+    MB_select <= '0';
+    B_address <= "00101";
+------------------------------------------------------------------------------------------------------
+      -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- R6=R0+!R1 r6=0x55555555 N=1;
+    D_address <= "00110";
+    A_address <= "00000";
+    B_address <= "00001";
+    write <= '1';
+    FS <= "00100";   --F=A+!B
+    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- show the operation from function unit done in register entered in B_address R6
+    write <= '0';
+    MB_select <= '0';
+    B_address <= "00110";
+------------------------------------------------------------------------------------------------------
+      -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- R7=R0+!R1+1; r7= 0x55555556 N=1
+    D_address <= "00111";
+    A_address <= "00000";
+    B_address <= "00001";
+    write <= '1';
+    FS <= "00101";   --F=A+!B+1
+    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- show the operation from function unit done in register entered in B_address R7
+    write <= '0';
+    MB_select <= '0';
+    B_address <= "00111";
+------------------------------------------------------------------------------------------------------
+      -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- R8=R0+!R1+1; r8=oxffffffff V=1 N=1 C=1;
+    D_address <= "01000";
+    A_address <= "00000";
+    B_address <= "00001";
+    write <= '1';
+    FS <= "00110";   --F=A-1
+    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- show the operation from function unit done in register entered in B_address R8
+    write <= '0';
+    MB_select <= '0';
+    B_address <= "01000";
+------------------------------------------------------------------------------------------------------
+      -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- R9=R1    ; r9= 0xaaaaaaaa N=1 C=1
+    D_address <= "01001";
+    A_address <= "00001";
+   -- B_address <= "00001";
+    write <= '1';
+    FS <= "00111";   --F=A
+    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- show the operation from function unit done in register entered in B_address R9
+    write <= '0';
+    MB_select <= '0';
+    B_address <= "01001";
+------------------------------------------------------------------------------------------------------
+--logic
+----------------------------------------------------------------------------------------------------------------------------------------------------
+      -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- R10=R0^R1; r10=0x00000000 Z=1
+    D_address <= "01010";
+    A_address <= "00000";
+    B_address <= "00001";
+    write <= '1';
+    FS <= "01000";   --F=A&&B
+    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- show the operation from function unit done in register entered in B_address R10
+    write <= '0';
+    MB_select <= '0';
+    B_address <= "01010";
+------------------------------------------------------------------------------------------------------
+     -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- R11=R0vR1; r11=0xaaaaaaaa N=1
+    D_address <= "01011";
+    A_address <= "00000";
+    B_address <= "00001";
+    write <= '1';
+    FS <= "01010";   --F=A||B
+    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- show the operation from function unit done in register entered in B_address R11
+    write <= '0';
+    MB_select <= '0';
+    B_address <= "01011";
+ ------------------------------------------------------------------------------------------------------
+     -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- R12=R6 xor R1 output oxffffffff N=1
+    D_address <= "01100";
+    A_address <= "00110";
+    B_address <= "00001";
+    write <= '1';
+    FS <= "01100";   --F=AxorB
+    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- show the operation from function unit done in register entered in B_address R12
+    write <= '0';
+    MB_select <= '0';
+    B_address <= "01100";
+ 
+ ------------------------------------------------------------------------------------------------------
+     -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- R13=!R0 output:0xffffffff N=1
+    D_address <= "01101";
+    A_address <= "00000";
+    B_address <= "00001";
+    write <= '1';
+    FS <= "01110";   --F=!A
+    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- show the operation from function unit done in register entered in B_address R13
+    write <= '0';
+    MB_select <= '0';
+    B_address <= "01101";
+    
+------------------------------------------------------------------------------------------------------
+     -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- R14=R1 r14=0xaaaaaaaa
+    D_address <= "01110";
+    A_address <= "00000";
+    B_address <= "00001";
+    write <= '1';
+    FS <= "10000";   --F=B
+    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- show the operation from function unit done in register entered in B_address R14
+    write <= '0';
+    MB_select <= '0';
+    B_address <= "01110";
+    
+------------------------------------------------------------------------------------------------------
+      -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- R15=R1>>1 r15=0x55555555
+    D_address <= "01111";
+    A_address <= "00000";
+    B_address <= "00001";
+    write <= '1';
+    FS <= "10100";   --F=B>>1
+
+    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- show the operation from function unit done in register entered in B_address R15
+    write <= '0';
+    MB_select <= '0';
+    B_address <= "01111";
+    
+
+------------------------------------------------------------------------------------------------------
+     -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- R16=R1<<1 r16=0x55555554
+    D_address <= "10000";
+    A_address <= "00000";
+    B_address <= "00001";
+    write <= '1';
+    FS <= "11000";   --F=B<<1
+    MD_select <='0';
+    
+    -- rising edge
+    wait for 50 ns;
+    clk <= '1';
+    
+    -- falling edge
+    wait for 50 ns;
+    clk <= '0';
+    -- show the operation from function unit done in register entered in B_address R16
+    write <= '0';
+    MB_select <= '0';
+    B_address <= "10000";
+    
+        wait for 50ns;
+        wait;
+  end process;
+
+end testBench;

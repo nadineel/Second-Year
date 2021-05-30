@@ -1,0 +1,119 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 23.12.2020 17:44:07
+-- Design Name: 
+-- Module Name: pc_tb - testbench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity pc_tb is
+--  Port ( );
+end pc_tb;
+
+architecture testbench of pc_tb is
+
+component pc
+Port (clk : in  STD_LOGIC;
+        reset : in  STD_LOGIC;PL : in  STD_LOGIC;
+        PI : in  STD_LOGIC;
+        pc_in : in  STD_LOGIC_VECTOR (31 downto 0);
+        pc_out : out  STD_LOGIC_VECTOR (31 downto 0));
+end component;
+
+signal        clk :  STD_LOGIC;
+signal        reset : STD_LOGIC;
+signal        PL    : STD_LOGIC;
+signal        PI    : STD_LOGIC;
+signal        pc_in : STD_LOGIC_VECTOR (31 downto 0);
+signal        pc_out : STD_LOGIC_VECTOR (31 downto 0);
+
+
+constant clock: time:=10 ns;
+
+begin
+
+    uut: pc PORT MAP (
+        clk=>clk,
+        reset=>reset,
+         PL     =>PL    ,
+         PI     =>PI    ,
+         pc_in  =>pc_in ,
+         pc_out =>pc_out);
+
+stimulus:process
+    begin
+
+        --output x"00000000" reset!
+        reset <= '1';
+        clk <= '1';
+        wait for clock;
+
+        --reset to 0 to do other if conditions
+        reset <= '0';
+        clk <= '0';
+        wait for clock;
+
+        --pc has 0x00000000 PL is on, pc+pc_in= 0x0000aaaa in pc_out
+        pc_in <= x"0000aaaa";
+        PL <= '1';
+        PI <= '0';
+        clk <= '1';
+        wait for clock;
+
+        clk <= '0';
+        wait for clock;
+
+        --pc has 0x0000aaaa, PI is on, pc+1= 0x0000aaab in pc_out
+        pc_in <= x"0000bbbb";--ignored
+        PL <= '0';
+        PI <= '1';
+        clk <= '1';
+        wait for clock;
+
+        clk <= '0';
+        wait for clock;
+
+        --both PL and PI are 1, PL is the 2nd if statement so pc+pc_in will be excecuted pc_out: 0x0000aaad
+        pc_in <= x"00000002";
+        PL <= '1';
+        PI <= '1';
+        clk <= '1';
+        wait for clock;
+
+        clk <= '0';
+        wait for clock;
+
+      
+        reset <= '1';
+        clk <= '1';
+        wait for clock;
+       
+    wait;
+    end process;
+
+end testbench;

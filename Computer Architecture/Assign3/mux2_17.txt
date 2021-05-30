@@ -1,0 +1,48 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 23.12.2020 17:44:07
+-- Design Name: 
+-- Module Name: mux2_17 - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity mux2_17 is
+  Port (MC : in  STD_LOGIC;
+        in0 : in  STD_LOGIC_VECTOR (16 downto 0);
+        in1 : in  STD_LOGIC_VECTOR (16 downto 0);
+        z : out  STD_LOGIC_VECTOR (16 downto 0));
+end mux2_17;
+
+architecture Behavioral of mux2_17 is
+
+begin
+z<=in0 after 5ns when MC='0' else   
+   in1 after 5ns when MC='1'; 
+   
+
+end Behavioral;

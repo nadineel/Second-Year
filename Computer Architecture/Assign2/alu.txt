@@ -1,0 +1,108 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 11.11.2020 11:58:21
+-- Design Name: 
+-- Module Name: ALU - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+entity ALU is
+  Port (  A : in  STD_LOGIC_VECTOR (31 downto 0);        
+        B : in  STD_LOGIC_VECTOR (31 downto 0);
+        c_in: in STD_LOGIC;
+        S : in  STD_LOGIC_VECTOR (2 downto 0);
+        c_out: out STD_LOGIC;
+        V: out STD_LOGIC;
+        G : out  STD_LOGIC_VECTOR (31 downto 0)
+  );
+end ALU;
+
+architecture Behavioral of ALU is
+
+    COMPONENT logic_circuit
+    Port ( A : in  STD_LOGIC_VECTOR (31 downto 0);
+           B : in  STD_LOGIC_VECTOR (31 downto 0);
+           S : in  STD_LOGIC_VECTOR (1 downto 0);
+           G : out  STD_LOGIC_VECTOR (31 downto 0)
+    );
+    END COMPONENT;
+    
+    COMPONENT arithmetic_logic
+    Port(A :  in  STD_LOGIC_VECTOR (31 downto 0); 
+         B : in  STD_LOGIC_VECTOR (31 downto 0); 
+         s0 : in  STD_LOGIC;
+         s1 : in  STD_LOGIC; 
+         c_in : in  STD_LOGIC;                    
+         c_out : out  STD_LOGIC;  
+         G : out  STD_LOGIC_VECTOR (31 downto 0); 
+         V : out  STD_LOGIC
+  );
+    END COMPONENT;
+
+    COMPONENT mux2_32
+     Port (s : in  STD_LOGIC;
+        in1 : in  STD_LOGIC_VECTOR (31 downto 0);
+        in2 : in  STD_LOGIC_VECTOR (31 downto 0);
+        z : out  STD_LOGIC_VECTOR (31 downto 0));
+    END COMPONENT;
+    
+    signal AC_in: std_logic_vector(31 downto 0);
+    signal LC_in: std_logic_vector(31 downto 0);
+    
+begin
+
+    
+    
+    arithmetic: arithmetic_logic PORT MAP(
+    A =>A, 
+    B =>B,
+    s0 =>S(0),  
+    s1 =>S(1),  
+    c_in =>c_in,
+    c_out=>c_out,
+    G => AC_in,
+    V => V     
+    );
+    
+    logic: logic_circuit PORT MAP(
+    A=>A,
+    B=>B,
+    S(0)=>S(0),
+    S(1)=>S(1),
+    G=>LC_in 
+    );
+    
+    mux2: mux2_32 PORT MAP(
+    s=>S(2),
+    in1=> AC_in,
+    in2=> LC_in,
+    z=>G
+    );
+    
+
+end Behavioral;
+

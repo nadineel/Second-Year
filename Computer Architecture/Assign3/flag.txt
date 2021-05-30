@@ -1,0 +1,94 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 02.01.2021 22:42:59
+-- Design Name: 
+-- Module Name: flag - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity flag is
+  Port (clk : in  STD_LOGIC;
+        Vflag : IN std_logic;
+        Cflag : IN std_logic;
+        Nflag : IN std_logic;
+        Zflag : IN std_logic;
+        
+        RV : IN std_logic;
+        RC : IN std_logic;
+        RN : IN std_logic;
+        RZ : IN std_logic;
+        
+        FL : IN std_logic;
+        
+        flagVector: OUT std_logic_vector(3 DOWNTO 0)
+  );
+end flag;
+
+architecture Behavioral of flag is
+
+signal output: std_logic_vector(3 DOWNTO 0);
+
+  
+begin
+
+process(clk)
+begin 
+
+if(rising_edge(clk)) then
+ if(FL='1') then
+     if (RV='1') THEN
+        output(3)<='0';
+     end if;
+        
+     if (RC='1') THEN
+        output(2)<='0'; 
+     end if;
+     
+     if (RN='1') THEN
+        output(1)<='0';
+     end if;
+     
+     if (RZ='1') THEN
+        output(0)<='0';       
+     end if;
+
+ elsif (FL='0') then
+  output(3)<=Vflag;
+  output(2)<=Cflag;
+  output(1)<=Nflag;
+  output(0)<=Zflag;
+  
+  end if;
+end if;
+
+end process;
+flagVector<=output;  
+        
+--flagVector<=output;
+
+end Behavioral;

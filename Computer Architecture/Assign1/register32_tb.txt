@@ -1,0 +1,85 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: Bernadine Lao
+-- 
+-- Create Date: 25.10.2020 01:16:21
+-- Design Name: 
+-- Module Name: register32_tb - Behavior
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+ENTITY register32_tb IS
+END register32_tb;
+
+ARCHITECTURE Behavior OF register32_tb IS
+
+    COMPONENT register32
+    PORT (D: in std_logic_vector (31 downto 0);
+        load: in std_logic;
+        Clk: in std_logic;
+        Q: out std_logic_vector(31 downto 0)
+        );
+    END COMPONENT;
+    
+    --Inputs
+    signal D:  std_logic_vector (31 downto 0);
+    signal load:  std_logic;
+    signal Clk:  std_logic;
+    --Output
+    signal Q:  std_logic_vector(31 downto 0);
+    
+--    signal myTime: time :=10 ns;
+    signal myClock: std_logic :='0';
+    
+BEGIN
+ 
+	-- Instantiate the Unit Under Test (UUT)
+   uut: register32 PORT MAP (
+          D=>D,
+          load=>load,
+          Clk=>Clk,
+          Q=>Q
+          );
+    myClock<=not myClock after 5 ns;
+    Clk<=myClock; 
+    
+   stim_proc: process
+   begin 
+   
+     wait for 10 ns; 
+     D<=x"aaaaaaaa";
+     load<='1';
+     
+     wait for 10 ns; 
+     D<=x"bbbbbbbb";
+     load<='0';
+     
+     wait for 10 ns; 
+     D<=x"cccccccc";
+     load<='1';
+
+    end process;
+END;

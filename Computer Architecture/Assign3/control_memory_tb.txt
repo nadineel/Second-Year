@@ -1,0 +1,136 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 22.12.2020 01:05:16
+-- Design Name: 
+-- Module Name: control_memory_tb - testbench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity control_memory_tb is
+--  Port ( );
+end control_memory_tb;
+
+architecture testbench of control_memory_tb is
+ 
+ component control_memory 
+ Port(FL : out std_logic; -- 0
+    RZ : out std_logic; -- 1
+    RN : out std_logic; -- 2
+    RC : out std_logic; -- 3
+    RV : out std_logic; -- 4
+    MW : out std_logic; -- 5
+    MM : out std_logic; -- 6
+    RW : out std_logic; -- 7
+    MD : out std_logic; -- 8
+    FS : out std_logic_vector(4 downto 0); -- 9 to 13
+    MB : out std_logic; -- 14
+    TB : out std_logic; -- 15
+    TA : out std_logic; -- 16
+    TD : out std_logic; -- 17
+    PL : out std_logic; -- 18
+    PI : out std_logic; -- 19
+    IL : out std_logic; -- 20
+    MC : out std_logic; -- 21
+    MS : out std_logic_vector(2 downto 0); -- 22 to 24
+    NA : out std_logic_vector(16 downto 0); -- 25 to 41
+    IN_CAR : in std_logic_vector(16 downto 0)
+ );
+ end component;
+ 
+    signal FL :  std_logic; -- 0
+    signal RZ :  std_logic; -- 1
+    signal RN :  std_logic; -- 2
+    signal RC :  std_logic; -- 3
+    signal RV :  std_logic; -- 4
+    signal MW :  std_logic; -- 5
+    signal MM :  std_logic; -- 6
+    signal RW :  std_logic; -- 7
+    signal MD :  std_logic; -- 8
+    signal FS :  std_logic_vector(4 downto 0); -- 9 to 13
+    signal MB :  std_logic; -- 14
+    signal TB :  std_logic; -- 15
+    signal TA :  std_logic; -- 16
+    signal TD :  std_logic; -- 17
+    signal PL :  std_logic; -- 18
+    signal PI :  std_logic; -- 19
+    signal IL :  std_logic; -- 20
+    signal MC :  std_logic; -- 21
+    signal MS :  std_logic_vector(2 downto 0); -- 22 to 24
+    signal NA :  std_logic_vector(16 downto 0); -- 25 to 41
+    signal IN_CAR : std_logic_vector(16 downto 0);
+    
+    constant clk: Time:=10 ns;
+
+begin
+ 
+ uut: control_memory port map(FL =>  FL,
+                             RZ =>  RZ,
+                             RN =>  RN,
+                             RC =>  RC,
+                             RV =>  RV,
+                             MW =>  MW,
+                             MM =>  MM,
+                             RW =>  RW,
+                             MD =>  MD,
+                             FS =>  FS,
+                             MB =>  MB,
+                             TB =>  TB,
+                             TA =>  TA,
+                             TD =>  TD,
+                             PL =>  PL,
+                             PI =>  PI,
+                             IL =>  IL,
+                             MC =>  MC,
+                             MS =>  MS,
+                             NA =>  NA,
+                             IN_CAR=>IN_CAR );
+                             
+                             
+  stimulus:process
+  begin
+    
+   --TESTS IF IT WILL GET IF CODE
+    -- | Next Address  | MS  | M|  I | P|  P|  T|  T|  T|  M| FS      |M|  R|  M|  M|  R|  R|  R|  R|  F|
+    -- | Next Address  | MS  | C|  L | I|  L|  D|  A|  B|  B| FS      |D|  W|  M|  W|  V|  C|  N|  Z|  L|
+--  "00000000011000001"&"000"&"0"&"1"&"1"&"0"&"0"&"0"&"0"&"0"&"00000"&"0"&"0"&"1"&"0"&"0"&"0"&"0"&"0"&"0",-- C0 IF: INSTRUCTION FETCH
+--OUTPUT FROM TB: C1                1  1                                        1   
+   IN_CAR<="00000000011000000";
+   wait for clk; 
+   
+     --TESTS IF IT WILL GET LD CODE
+    -- | Next Address  | MS  | M|  I | P|  P|  T|  T|  T|  M| FS      |M|  R|  M|  M|  R|  R|  R|  R|  F|
+    -- | Next Address  | MS  | C|  L | I|  L|  D|  A|  B|  B| FS      |D|  W|  M|  W|  V|  C|  N|  Z|  L|
+--  "00000000011000000"&"001"&"0"&"0"&"0"&"0"&"0"&"0"&"0"&"0"&"00000"&"1"&"1"&"0"&"0"&"0"&"0"&"0"&"0"&"0",-- 01	LD:	 Load  
+--OUTPUT FROM TB: C0      1                                            1   1
+   IN_CAR<="00000000000000001";
+   wait for clk;
+   
+    wait;
+    end process;
+    
+end testbench;

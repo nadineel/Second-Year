@@ -1,0 +1,112 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 16.11.2020 00:32:16
+-- Design Name: 
+-- Module Name: lc_inputs_tb - testBench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity lc_inputs_tb is
+--  Port ( );
+end lc_inputs_tb;
+
+architecture testBench of lc_inputs_tb is
+    component lc_inputs port ( 
+  		A : in  STD_LOGIC;
+        B : in  STD_LOGIC;
+        S : in  STD_LOGIC_VECTOR (1 downto 0);
+        G : out  STD_LOGIC);
+  end component;
+
+   signal s0: std_logic;
+  signal s1: std_logic;
+  signal A: std_logic;
+  signal B: std_logic;
+  signal G: std_logic;
+
+  
+
+begin
+
+  uut: lc_inputs port map ( S(0)=> s0,
+                           S(1) => s1,
+                           A  => A,
+                           B  => B,
+                           G  => G );
+
+  stimulus: process
+  begin
+  
+    wait for 10 ns;
+    A <= '0';
+    B <= '0';
+    s0 <= '0';
+    s1 <= '0';
+    
+    
+    wait for 10 ns;
+    s0 <= '0';
+    s1 <= '1';
+    
+    
+    wait for 10 ns;
+    s0 <= '1';
+    s1 <= '0';
+    
+    
+    wait for 10 ns;
+    s0 <= '1';
+    s1 <= '1';
+    
+    
+    wait for 10 ns;
+    A <= '1';
+    B <= '1';
+    s0 <= '0';
+    s1 <= '0';
+    
+    
+    wait for 10 ns;
+    s0 <= '0';
+    s1 <= '1';
+    
+    
+    wait for 10 ns;
+    s0 <= '1';
+    s1 <= '0';
+    
+    
+    wait for 10 ns;
+    s0 <= '1';
+    s1 <= '1';
+    
+    wait for 10 ns;
+
+  end process;
+
+end testBench;

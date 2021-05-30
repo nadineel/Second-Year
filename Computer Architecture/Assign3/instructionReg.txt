@@ -1,0 +1,66 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 23.12.2020 17:44:07
+-- Design Name: 
+-- Module Name: instructionReg - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity instructionReg is
+  Port (clk : in  STD_LOGIC; 
+        IL : in  STD_LOGIC;
+        IR_in : in  STD_LOGIC_VECTOR (31 downto 0);
+        opcode : out  STD_LOGIC_VECTOR (16 downto 0);
+        DR : out  STD_LOGIC_VECTOR (4 downto 0);
+        SA : out  STD_LOGIC_VECTOR (4 downto 0);
+        SB : out  STD_LOGIC_VECTOR (4 downto 0)
+        );
+end instructionReg;
+
+architecture Behavioral of instructionReg is
+
+signal output: STD_LOGIC_VECTOR (31 downto 0);
+
+begin
+
+    stimulus: process(clk)
+    begin 
+     if(rising_edge(clk)) then
+        if IL='1' then
+            output<=IR_in after 5 ns;
+        end if;
+     end if;
+     
+    end process;
+
+    SB<= output(4 downto 0);     --5
+    SA<= output(9 downto 5);     --5
+    DR<= output(14 downto 10);     --5
+    opcode<= output(31 downto 15);     --17
+    
+end Behavioral;

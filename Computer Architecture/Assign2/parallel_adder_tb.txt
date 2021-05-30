@@ -1,0 +1,92 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 15.11.2020 12:03:05
+-- Design Name: 
+-- Module Name: parallel_adder32_tb - testBench
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity parallel_adder32_tb is
+end;
+
+architecture bench of parallel_adder32_tb is
+
+  component parallel_adder32
+      Port (X : in  STD_LOGIC_VECTOR (31 downto 0); 
+          Y : in  STD_LOGIC_VECTOR (31 downto 0);
+          c_in : in  STD_LOGIC;  
+          c_out : out  STD_LOGIC;
+          G : out  STD_LOGIC_VECTOR (31 downto 0);
+          V : out  STD_LOGIC 
+            );    
+  end component;
+
+  signal X: std_logic_vector (31 downto 0);
+  signal Y: std_logic_vector (31 downto 0);
+  signal c_in: std_logic;
+  signal c_out: std_logic;
+  signal G: std_logic_vector (31 downto 0);
+  signal V: std_logic;
+
+begin
+
+  uut: parallel_adder32 port map (
+    X => X,
+    Y => Y,
+    c_in =>c_in,
+    c_out => c_out,
+    G =>G,
+    V =>V
+    );
+
+  stimulus: process
+  begin
+    c_in <= '0';
+  
+    X <= "00000000000000000000000000000001";
+    Y <= "00000000000000000000000000000001";
+    wait for 10 ns;
+    
+    X <= "00000000000000000000000000000010";
+    Y <= "00000000000000000000000000000010";
+    wait for 10 ns;
+    
+    c_in <= '1';
+    X <= "00000000000000000000000000010101";
+    Y <= "00000000000000000000000000010101";
+    wait for 10 ns;
+    
+    X <= "00000000000000000000000000001111";
+    Y <= "00000000000000000000000000000000";
+    c_in <= '1';
+
+    wait for 10 ns;
+  end process;
+
+
+end;
